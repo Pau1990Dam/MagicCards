@@ -1,5 +1,6 @@
 package com.pau.a14270729b.magiccards;
 
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import MagicCardsApi.MagiCardsApi;
+import Pojos.Card;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,9 +32,11 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    @Override
-    public void setHasOptionsMenu(boolean hasMenu) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -79,6 +83,7 @@ public class MainActivityFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_refresh) {
+            //Poner el asynktask
             refresh();
             return true;
         }
@@ -87,11 +92,33 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void refresh() {
-        MagiCardsApi api = new MagiCardsApi();
-        String result = api.getCartas();
 
-        Log.d("DEBUG", result);
+        RefreshTask task = new RefreshTask();
+        task.execute();
 
+
+
+
+    }
+
+    private class RefreshTask extends AsyncTask<Object, Object, ArrayList<Card>>{
+        @Override
+        protected ArrayList<Card> doInBackground(Object... params) {
+            MagiCardsApi api = new MagiCardsApi();
+            ArrayList<Card> result = api.getCartas();
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Card> cards) {
+
+            adapter.clear();
+            for(Card i: cards){
+                adapter.add(i.getName());
+            }
+
+        }
     }
 
 }
