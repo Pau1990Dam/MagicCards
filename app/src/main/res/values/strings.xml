@@ -6,6 +6,29 @@
 
     <!-- Strings related to Settings -->
 
+    <!-- Common, Uncommon, Rare, Mythic Rare, Special, Basic Land-->
+    <string name="card_settings">Card Filter Settings</string>
+
+    <string name="rarity_settings">Choose rarity</string>
+    <string-array name="rarity_names">
+        <item>Common</item>
+        <item>Uncommon</item>
+        <item>Mythic Rare</item>
+        <item>Special</item>
+        <item>Basic Land</item>
+    </string-array>
+    <string-array name="rarity_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="defaults">
+        <item>0</item>
+    </string-array>
+
+
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Cards Selection Settings">
+        <MultiSelectListPreference
+            android:defaultValue="@array/defaults"
+            android:entries="@array/rarity_names"
+            android:entryValues="@array/rarity_values"
+            android:key="rarity"
+            android:title="@string/rarity_settings"
+            android:summary="Más tarde solucionaremos lo del summary"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>
