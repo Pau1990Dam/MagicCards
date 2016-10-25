@@ -1,6 +1,7 @@
 package MagicCardsApi;
 
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,11 +26,34 @@ public class MagiCardsApi {
                 .build();
         String url = builtUri.toString();
 
+        return getJson(url);
+    }
+
+    public ArrayList <Card> getCartasByRarity(String kind) {
+        Uri builtUri = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendQueryParameter("rarity", kind)
+                .build();
+        String url = builtUri.toString();
+
+        return getJson(url);
+    }
+
+    @Nullable
+    private ArrayList <Card> getJson(String url) {
         try {
             String JsonResponse = HttpUtils.get(url);
-            ArrayList<Card> cartas = new ArrayList<>();
+            return jsonParser(JsonResponse);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
 
-            JSONObject data = new JSONObject(JsonResponse);
+    private ArrayList<Card>jsonParser(String jsonResponse) {
+        ArrayList<Card> cartas = new ArrayList<>();
+        try {
+            JSONObject data = new JSONObject(jsonResponse);
             JSONArray jsonCards = data.getJSONArray("cards");
 
             for(int i=0; i < jsonCards.length();i++){
@@ -37,28 +61,27 @@ public class MagiCardsApi {
                 JSONObject object = jsonCards.getJSONObject(i);
 
                 card.setName(object.getString("name"));
-                card.setImageUrl(object.getString("imageUrl"));
                 card.setRarity(object.getString("rarity"));
                 card.setType(object.getString("type"));
 
+                if(object.has("imageUrl"))
+                    card.setImageUrl(object.getString("imageUrl"));
+                else
+                    card.setImageUrl("");
                 if(object.has("text"))
                     card.setText(object.getString("text"));
                 else
                     card.setText("");
-
                 cartas.add(card);
             }
-
-            return cartas;
-
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return cartas;
     }
+
 }
+
 /*
 import android.net.Uri;
 

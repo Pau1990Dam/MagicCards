@@ -1,6 +1,8 @@
 package com.pau.a14270729b.magiccards;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import MagicCardsApi.MagiCardsApi;
 import Pojos.Card;
@@ -36,7 +41,6 @@ public class MainActivityFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -47,16 +51,7 @@ public class MainActivityFragment extends Fragment {
 
         ListView lista = (ListView) view.findViewById(R.id.lvCartas);
 
-        String test [] = {
-                "Blue Ward",
-                "Bog Wraith",
-                "Blue Ward",
-                "Bog Wraith",
-                "Blue Ward",
-                "Bog Wraith"
-        };
-
-        items = new ArrayList<>(Arrays.asList(test));
+        items = new ArrayList<>();
         adapter = new ArrayAdapter<>(
                 getContext(),
                 R.layout.cartas_fila,
@@ -83,7 +78,7 @@ public class MainActivityFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_refresh) {
-            //Poner el asynktask
+
             refresh();
             return true;
         }
@@ -91,31 +86,71 @@ public class MainActivityFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void refresh() {
-
-        RefreshTask task = new RefreshTask();
-        task.execute();
-
-
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        refresh();
     }
 
-    private class RefreshTask extends AsyncTask<Object, Object, ArrayList<Card>>{
-        @Override
-        protected ArrayList<Card> doInBackground(Object... params) {
-            MagiCardsApi api = new MagiCardsApi();
-            ArrayList<Card> result = api.getCartas();
+    private void refresh() {
+        RefreshTask task = new RefreshTask();
+        task.execute();
+    }
 
-            return result;
+    //
+    private class RefreshTask extends AsyncTask<Object, Object, ArrayList<ArrayList<Card>>>{
+        @Override
+        protected ArrayList<ArrayList<Card>> doInBackground(Object... params) {
+            //Queda millorar el codi.
+
+            String [] selection ;
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            Set<String> activeRarities = new HashSet<String>();
+            //Leemos El Set de String correspondiente al MultiSelectListPreference y lo metemos un array de Strings
+            activeRarities = preferences.getStringSet("rarity", activeRarities);
+            //Por alguna razón el getDefaultSharedPreferences no pilla el valor x defecto, metido en el xml, cuando la app se abre x primera vez
+            //Por eso lo pongo yo a manubrio.
+            if(activeRarities.size()==0)selection = new String[]{"0"};
+            else selection = activeRarities.toArray(new String[]{});
+
+
+            ArrayList<ArrayList<Card>> nodes = new ArrayList<>();
+            MagiCardsApi api = new MagiCardsApi();
+
+            for(String str: selection){
+                /*Como el array de Strings contiene las posiciones correspondientes a las entradas seleccionada del MultiSelectListPreference
+                * hay que traduccir estas posiciones al valor que se refieren. */
+                switch(str){
+                    case "0":
+                        nodes.add(api.getCartasByRarity("common"));
+                        break;
+                    case "1":
+                        nodes.add(api.getCartasByRarity("uncommon"));
+                        break;
+                    case "2":
+                        nodes.add(api.getCartasByRarity("mythic rare"));
+                        break;
+                    case "3":
+                        nodes.add(api.getCartasByRarity("special"));
+                        break;
+                    case "4":
+                        nodes.add(api.getCartasByRarity("basic land"));
+                        break;
+                }
+
+            }
+            Log.i("DEBUG","Cheeeee  "+ String.valueOf(selection.length));
+            return nodes;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Card> cards) {
+        protected void onPostExecute(ArrayList<ArrayList<Card>> cardsArrays) {
 
             adapter.clear();
-            for(Card i: cards){
-                adapter.add(i.getName());
+            for(ArrayList<Card> arr: cardsArrays){
+                for(Card c: arr){
+                    adapter.add(c.getName());
+                }
             }
 
         }
