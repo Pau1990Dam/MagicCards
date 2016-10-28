@@ -11,6 +11,7 @@ public class Card {
     String text;
     String type;
     String imageUrl;
+    String id;
 
     public Card(){}
 
@@ -62,6 +63,14 @@ public class Card {
         this.imageUrl = imageUrl;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Card{" +
@@ -70,6 +79,7 @@ public class Card {
                 ", text='" + text + '\'' +
                 ", type='" + type + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }

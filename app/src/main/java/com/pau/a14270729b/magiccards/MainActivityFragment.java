@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import Adapter.CardAdapter;
 import MagicCardsApi.MagiCardsApi;
 import Pojos.Card;
 
@@ -30,8 +31,8 @@ import Pojos.Card;
 public class MainActivityFragment extends Fragment {
 
     private View view;
-    private ArrayList<String> items;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Card> items;
+    private CardAdapter adapter;
 
     public MainActivityFragment() {
     }
@@ -52,10 +53,9 @@ public class MainActivityFragment extends Fragment {
         ListView lista = (ListView) view.findViewById(R.id.lvCartas);
 
         items = new ArrayList<>();
-        adapter = new ArrayAdapter<>(
+        adapter = new CardAdapter(
                 getContext(),
                 R.layout.cartas_fila,
-                R.id.carta,
                 items
         );
         lista.setAdapter(adapter);
@@ -110,9 +110,11 @@ public class MainActivityFragment extends Fragment {
             activeRarities = preferences.getStringSet("rarity", activeRarities);
             //Por alguna razón el getDefaultSharedPreferences no pilla el valor x defecto, metido en el xml, cuando la app se abre x primera vez
             //Por eso lo pongo yo a manubrio.
-            if(activeRarities.size()==0)selection = new String[]{"0"};
-            else selection = activeRarities.toArray(new String[]{});
+           /* if(activeRarities.size()==0)selection = new String[]{"0"};
+            else ;*/
 
+            selection = activeRarities.toArray(new String[]{});
+            Log.i("DEBUG","Cheeeee  "+ String.valueOf(selection.length));
 
             ArrayList<ArrayList<Card>> nodes = new ArrayList<>();
             MagiCardsApi api = new MagiCardsApi();
@@ -139,7 +141,7 @@ public class MainActivityFragment extends Fragment {
                 }
 
             }
-            Log.i("DEBUG","Cheeeee  "+ String.valueOf(selection.length));
+
             return nodes;
         }
 
@@ -148,8 +150,8 @@ public class MainActivityFragment extends Fragment {
 
             adapter.clear();
             for(ArrayList<Card> arr: cardsArrays){
-                for(Card c: arr){
-                    adapter.add(c.getName());
+                for(Card carta: arr){
+                    adapter.add(carta);
                 }
             }
 
