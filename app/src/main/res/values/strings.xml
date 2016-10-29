@@ -30,7 +30,7 @@
     <string-array name="defaults">
         <item>Common</item>
     </string-array>
-<!--
+    <!--
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -107,4 +107,5 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

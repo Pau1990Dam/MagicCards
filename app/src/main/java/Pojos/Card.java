@@ -1,10 +1,12 @@
 package Pojos;
 
+import java.io.Serializable;
+
 /**
  * Created by 14270729b on 14/10/16.
  */
 
-public class Card {
+public class Card implements Serializable {
 
     private String name;
     String rarity;

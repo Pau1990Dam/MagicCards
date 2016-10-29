@@ -16,6 +16,7 @@ import com.pau.a14270729b.magiccards.R;
 import java.util.List;
 
 import Pojos.Card;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by 14270729b on 28/10/16.
@@ -49,7 +50,7 @@ public class CardAdapter extends ArrayAdapter<Card> {
         type.setText(card.getType());
         rarity.setText(card.getRarity());
         text.setText(card.getText());
-        Glide.with(getContext()).load(card.getImageUrl()).into(imgUrl);
+        Glide.with(getContext()).load(card.getImageUrl()).bitmapTransform(new RoundedCornersTransformation(getContext(),14,1)).into(imgUrl);
 
         return convertView;
     }
