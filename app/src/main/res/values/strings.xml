@@ -4,6 +4,9 @@
     <string name="menu_refresh">Refresh</string>
     <string name="title_activity_settings">Settings</string>
 
+    <!-- Strings related to cartas_fila -->
+    <string name="altImage">Image card place</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Common, Uncommon, Rare, Mythic Rare, Special, Basic Land-->
@@ -18,16 +21,22 @@
         <item>Basic Land</item>
     </string-array>
     <string-array name="rarity_values">
+        <item>Common</item>
+        <item>Uncommon</item>
+        <item>Mythic Rare</item>
+        <item>Special</item>
+        <item>Basic Land</item>
+    </string-array>
+    <string-array name="defaults">
+        <item>Common</item>
+    </string-array>
+<!--
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
-    </string-array>
-    <string-array name="defaults">
-        <item>0</item>
-    </string-array>
-
+-->
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

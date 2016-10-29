@@ -68,10 +68,11 @@ public class MagiCardsApi {
                     card.setImageUrl(object.getString("imageUrl"));
                 else
                     card.setImageUrl("");
+
                 if(object.has("text"))
                     card.setText(object.getString("text"));
                 else
-                    card.setText("");
+                    card.setText("none");
                 cartas.add(card);
             }
         } catch (JSONException e) {

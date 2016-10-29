@@ -12,12 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,9 +26,10 @@ import Pojos.Card;
  */
 public class MainActivityFragment extends Fragment {
 
-    private View view;
-    private ArrayList<Card> items;
+    View view;
+    ArrayList<Card> items;
     private CardAdapter adapter;
+    private StringBuilder petition;
 
     public MainActivityFragment() {
     }
@@ -59,6 +56,7 @@ public class MainActivityFragment extends Fragment {
                 items
         );
         lista.setAdapter(adapter);
+        petition = new StringBuilder();
 
         return view;
     }
@@ -97,64 +95,33 @@ public class MainActivityFragment extends Fragment {
         task.execute();
     }
 
-    //
-    private class RefreshTask extends AsyncTask<Object, Object, ArrayList<ArrayList<Card>>>{
+    private class RefreshTask extends AsyncTask<Object, Object, ArrayList<Card>>{
         @Override
-        protected ArrayList<ArrayList<Card>> doInBackground(Object... params) {
-            //Queda millorar el codi.
+        protected ArrayList<Card> doInBackground(Object... params) {
 
-            String [] selection ;
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            Set<String> activeRarities = new HashSet<String>();
-            //Leemos El Set de String correspondiente al MultiSelectListPreference y lo metemos un array de Strings
+            Set<String> activeRarities = new HashSet<>();
             activeRarities = preferences.getStringSet("rarity", activeRarities);
-            //Por alguna razón el getDefaultSharedPreferences no pilla el valor x defecto, metido en el xml, cuando la app se abre x primera vez
-            //Por eso lo pongo yo a manubrio.
-           /* if(activeRarities.size()==0)selection = new String[]{"0"};
-            else ;*/
 
-            selection = activeRarities.toArray(new String[]{});
-            Log.i("DEBUG","Cheeeee  "+ String.valueOf(selection.length));
+            Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size()));
 
-            ArrayList<ArrayList<Card>> nodes = new ArrayList<>();
+            ArrayList<Card> cards;
             MagiCardsApi api = new MagiCardsApi();
-
-            for(String str: selection){
-                /*Como el array de Strings contiene las posiciones correspondientes a las entradas seleccionada del MultiSelectListPreference
-                * hay que traduccir estas posiciones al valor que se refieren. */
-                switch(str){
-                    case "0":
-                        nodes.add(api.getCartasByRarity("common"));
-                        break;
-                    case "1":
-                        nodes.add(api.getCartasByRarity("uncommon"));
-                        break;
-                    case "2":
-                        nodes.add(api.getCartasByRarity("mythic rare"));
-                        break;
-                    case "3":
-                        nodes.add(api.getCartasByRarity("special"));
-                        break;
-                    case "4":
-                        nodes.add(api.getCartasByRarity("basic land"));
-                        break;
-                }
-
+            petition.setLength(0);
+            for(String str: activeRarities){
+                petition.append(str).append(",");
             }
-
-            return nodes;
+            cards = api.getCartasByRarity(petition.toString());
+            return cards;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<ArrayList<Card>> cardsArrays) {
+        protected void onPostExecute(ArrayList<Card> arr) {
 
             adapter.clear();
-            for(ArrayList<Card> arr: cardsArrays){
-                for(Card carta: arr){
-                    adapter.add(carta);
-                }
+            for(Card card: arr){
+                adapter.add(card);
             }
-
         }
     }
 
