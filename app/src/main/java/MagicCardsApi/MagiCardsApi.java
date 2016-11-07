@@ -17,6 +17,8 @@ import Pojos.Card;
  * Created by 14270729b on 14/10/16.
  */
 
+//https://docs.magicthegathering.io/
+
 public class MagiCardsApi {
     private final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
 
@@ -39,6 +41,16 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
+    public ArrayList <Card> getCartasColor(String kind) {
+        Uri builtUri = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendQueryParameter("color", kind)
+                .build();
+        String url = builtUri.toString();
+
+        return getJson(url);
+    }
+
     @Nullable
     private ArrayList <Card> getJson(String url) {
         try {
@@ -52,6 +64,7 @@ public class MagiCardsApi {
 
     private ArrayList<Card>jsonParser(String jsonResponse) {
         ArrayList<Card> cartas = new ArrayList<>();
+        String [] cardColors;
         try {
             JSONObject data = new JSONObject(jsonResponse);
             JSONArray jsonCards = data.getJSONArray("cards");
@@ -63,6 +76,8 @@ public class MagiCardsApi {
                 card.setName(object.getString("name"));
                 card.setRarity(object.getString("rarity"));
                 card.setType(object.getString("type"));
+                card.setCmc(object.getInt("cmc"));
+
 
                 if(object.has("imageUrl"))
                     card.setImageUrl(object.getString("imageUrl"));
@@ -73,6 +88,25 @@ public class MagiCardsApi {
                     card.setText(object.getString("text"));
                 else
                     card.setText("none");
+
+                if(object.has("id"))
+                    card.setId(object.getString("id"));
+                else
+                    card.setId(card.getName());
+
+                if(object.has("power"))
+                    card.setPower(object.getString("power"));
+                else
+                    card.setPower("nd");
+
+                JSONArray colors = object.getJSONArray("colors");
+                cardColors = new String[colors.length()];
+
+                for(int j = 0; j < colors.length(); j++){
+                    cardColors[j] = colors.getString(j);
+                }
+                card.setColors(cardColors);
+
                 cartas.add(card);
             }
         } catch (JSONException e) {

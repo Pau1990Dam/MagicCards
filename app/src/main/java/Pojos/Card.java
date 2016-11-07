@@ -1,6 +1,7 @@
 package Pojos;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by 14270729b on 14/10/16.
@@ -8,22 +9,42 @@ import java.io.Serializable;
 
 public class Card implements Serializable {
 
-    private String name;
+    String name;
     String rarity;
     String text;
     String type;
     String imageUrl;
     String id;
+    String [] colors;
+    String power;
+    int cmc;
+
 
     public Card(){}
 
-    public Card(String name, String rarity, String text, String type, String imageUrl) {
+    public Card(String name, String rarity, String text, String type, String imageUrl, String id, String[] colors, String power, int cmc) {
         this.name = name;
         this.rarity = rarity;
         this.text = text;
         this.type = type;
         this.imageUrl = imageUrl;
+        this.id = id;
+        this.colors = colors;
+        this.power = power;
+        this.cmc = cmc;
     }
+
+    public String getPower() { return power; }
+
+    public void setPower(String power) { this.power = power; }
+
+    public int getCmc() { return cmc; }
+
+    public void setCmc(int cmc) { this.cmc = cmc; }
+
+    public String [] getColors() { return colors; }
+
+    public void setColors(String [] colors) { this.colors = colors; }
 
     public String getName() {
         return name;
@@ -82,6 +103,9 @@ public class Card implements Serializable {
                 ", type='" + type + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", id='" + id + '\'' +
+                ", colors=" + Arrays.toString(colors) +
+                ", power='" + power + '\'' +
+                ", cmc=" + cmc +
                 '}';
     }
 }

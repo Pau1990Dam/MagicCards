@@ -50,7 +50,8 @@ public class CardAdapter extends ArrayAdapter<Card> {
         type.setText(card.getType());
         rarity.setText(card.getRarity());
         text.setText(card.getText());
-        Glide.with(getContext()).load(card.getImageUrl()).bitmapTransform(new RoundedCornersTransformation(getContext(),14,1)).into(imgUrl);
+        Glide.with(getContext()).load(card.getImageUrl()).bitmapTransform(
+                new RoundedCornersTransformation(getContext(),14,1)).into(imgUrl);
 
         return convertView;
     }

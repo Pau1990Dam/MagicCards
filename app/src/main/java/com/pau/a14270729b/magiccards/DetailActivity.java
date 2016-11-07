@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class DetailActivity extends AppCompatActivity {
+    //ActionBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
+    }
 }
