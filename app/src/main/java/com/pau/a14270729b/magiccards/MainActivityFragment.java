@@ -2,6 +2,7 @@ package com.pau.a14270729b.magiccards;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,10 +51,14 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        FragmentMainBinding bindig = DataBindingUtil.inflate
+                (inflater, R.layout.fragment_main, container, false);
+        view = bindig.getRoot();
+
+
 
         petition = new StringBuilder();
-        ListView lista = (ListView) view.findViewById(R.id.lvCartas);
 
         items = new ArrayList<>();
         adapter = new CardAdapter(
@@ -58,8 +66,8 @@ public class MainActivityFragment extends Fragment {
                 R.layout.cartas_fila,
                 items
         );
-        lista.setAdapter(adapter);
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        bindig.lvCartas.setAdapter(adapter);
+        bindig.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Card card = (Card) parent.getItemAtPosition(position);

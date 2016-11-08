@@ -1,17 +1,18 @@
 package Adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.pau.a14270729b.magiccards.R;
+import com.pau.a14270729b.magiccards.databinding.CartasFilaBinding;
+
 
 import java.util.List;
 
@@ -34,25 +35,24 @@ public class CardAdapter extends ArrayAdapter<Card> {
         Card card = getItem(position);
         Log.i("", card.toString());
 
+        CartasFilaBinding binding =null;
+
         if(convertView==null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.cartas_fila, parent, false);
+            binding = DataBindingUtil.inflate(inflater, R.layout.cartas_fila, parent, false);
         }
+        else
+            binding = DataBindingUtil.getBinding(convertView);
 
-        TextView name = (TextView) convertView.findViewById(R.id.carta);
-        TextView type = (TextView) convertView.findViewById(R.id.type);
-        TextView rarity = (TextView) convertView.findViewById(R.id.rarity);
-        TextView text = (TextView) convertView.findViewById(R.id.text);
 
-        ImageView imgUrl = (ImageView) convertView.findViewById(R.id.imgUrl);
 
-        name.setText(card.getName());
-        type.setText(card.getType());
-        rarity.setText(card.getRarity());
-        text.setText(card.getText());
+        binding.carta.setText(card.getName());
+        binding.type.setText(card.getType());
+        binding.rarity.setText(card.getRarity());
+        binding.text.setText(card.getText());
         Glide.with(getContext()).load(card.getImageUrl()).bitmapTransform(
-                new RoundedCornersTransformation(getContext(),14,1)).into(imgUrl);
+                new RoundedCornersTransformation(getContext(),14,1)).into(binding.imgUrl);
 
-        return convertView;
+        return binding.getRoot();
     }
 }

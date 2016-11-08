@@ -76,7 +76,7 @@ public class MagiCardsApi {
                 card.setName(object.getString("name"));
                 card.setRarity(object.getString("rarity"));
                 card.setType(object.getString("type"));
-                card.setCmc(object.getInt("cmc"));
+
 
 
                 if(object.has("imageUrl"))
@@ -99,13 +99,22 @@ public class MagiCardsApi {
                 else
                     card.setPower("nd");
 
-                JSONArray colors = object.getJSONArray("colors");
-                cardColors = new String[colors.length()];
+                if(object.has("cmc"))
+                    card.setCmc(object.getInt("cmc"));
+                else
+                    card.setCmc(0);
 
-                for(int j = 0; j < colors.length(); j++){
-                    cardColors[j] = colors.getString(j);
+                if(object.has("colors")) {
+                    JSONArray colors = object.getJSONArray("colors");
+                    cardColors = new String[colors.length()];
+
+                    for(int j = 0; j < colors.length(); j++){
+                        cardColors[j] = colors.getString(j);
+                    }
+                    card.setColors(cardColors);
                 }
-                card.setColors(cardColors);
+                else
+                    card.setColors(cardColors = new String []{"nd"});
 
                 cartas.add(card);
             }
