@@ -7,10 +7,12 @@
     <!-- Strings related to cartas_fila -->
     <string name="altImage">Image card place</string>
 
-    <!-- Strings related to Settings -->
+    <!-- Strings related to CARD Settings -->
 
     <!-- Common, Uncommon, Rare, Mythic Rare, Special, Basic Land-->
     <string name="card_settings">Card Filter Settings</string>
+
+    <string name="card_settings_section_rarity">RARITIES</string>
 
     <string name="rarity_settings">Choose rarity</string>
     <string-array name="rarity_names">
@@ -29,6 +31,31 @@
     </string-array>
     <string-array name="defaults">
         <item>Common</item>
+    </string-array>
+
+    <!--colors -->
+    <string name="card_settings_section_colors">COLORS</string>
+
+    <string name="ColorsAndOr">AND</string>
+    <string name="ColorsAndOr_summary">If Active all checked colors will be search as one condition</string>
+
+    <string name="color_settings">Choose color</string>
+    <string-array name="color_names">
+        <item>White</item>
+        <item>Black</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+    </string-array>
+    <string-array name="color_values">
+        <item>White</item>
+        <item>Black</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+    </string-array>
+    <string-array name="color_defaults">
+        <item>White</item>
     </string-array>
     <!--
         <item>0</item>

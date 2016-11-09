@@ -41,15 +41,27 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public ArrayList <Card> getCartasColor(String kind) {
+    public ArrayList <Card> getCartasByColor(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
-                .appendQueryParameter("color", kind)
+                .appendQueryParameter("colors", kind)
                 .build();
         String url = builtUri.toString();
 
         return getJson(url);
     }
+
+    public ArrayList <Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
+        Uri builtUri = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendQueryParameter("rarity", kind)
+                .appendQueryParameter("colors", Kind2)
+                .build();
+        String url = builtUri.toString();
+
+        return getJson(url);
+    }
+
 
     @Nullable
     private ArrayList <Card> getJson(String url) {

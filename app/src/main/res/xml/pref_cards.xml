@@ -2,15 +2,34 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="Cards Selection Settings">
+        android:title="@string/card_settings_section_rarity">
         <MultiSelectListPreference
-            android:defaultValue="@array/defaults"
+
             android:entries="@array/rarity_names"
             android:entryValues="@array/rarity_values"
             android:key="rarity"
             android:title="@string/rarity_settings"
             android:summary="Más tarde solucionaremos lo del summary"
             />
+        <!-- android:defaultValue="@array/defaults" -->
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/card_settings_section_colors">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="ColorsAndOr"
+            android:summary="@string/ColorsAndOr_summary"
+            android:title="@string/ColorsAndOr" />
+
+        <MultiSelectListPreference
+
+            android:entries="@array/color_names"
+            android:entryValues="@array/color_values"
+            android:key="color"
+            android:title="@string/color_settings"
+            android:summary="Más tarde solucionaremos lo del summary"
+            />
+        <!-- android:defaultValue="@array/defaults" -->
+    </PreferenceCategory>
 </PreferenceScreen>

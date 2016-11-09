@@ -21,7 +21,9 @@ import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeMap;
 
 import Adapter.CardAdapter;
 import MagicCardsApi.MagiCardsApi;
@@ -120,17 +122,33 @@ public class MainActivityFragment extends Fragment {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             Set<String> activeRarities = new HashSet<>();
-            activeRarities = preferences.getStringSet("rarity", activeRarities);
+            Set<String> activeColors = new HashSet<>();
+            boolean colorsAndOr = true;
 
-            Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size()));
+            activeRarities = preferences.getStringSet("rarity", activeRarities);
+            activeColors = preferences.getStringSet("color", activeColors);
+            colorsAndOr = preferences.getBoolean("ColorsAndOr",colorsAndOr);
+
+            Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size())+" Colors size: "+
+                    String.valueOf(activeColors.size()));
 
             ArrayList<Card> cards;
             MagiCardsApi api = new MagiCardsApi();
-            petition.setLength(0);
-            for(String str: activeRarities){
-                petition.append(str).append(",");
+
+            TreeMap <String,String> parameters = petitionParametersPreparation(activeRarities,activeColors,colorsAndOr);
+
+            if(parameters.size() == 2){
+                cards = api.getCartasByRaritiesAndColors(parameters.get("rarity"),parameters.get("color"));
+            }else if(parameters.size() == 1 ){
+
+                if(parameters.containsKey("rarity"))
+                    cards = api.getCartasByRarity(parameters.get("rarity"));
+                else
+                    cards = api.getCartasByColor(parameters.get("color"));
+            }else{
+                cards = api.getCartas();
             }
-            cards = api.getCartasByRarity(petition.toString());
+
             return cards;
         }
 
@@ -142,6 +160,37 @@ public class MainActivityFragment extends Fragment {
                 adapter.add(card);
             }
         }
+    }
+
+    public TreeMap<String, String> petitionParametersPreparation(Set<String> rarities, Set<String> colors,
+                                                                 Boolean switchColorsValue){
+        TreeMap <String,String>parametersToUse = new TreeMap<>();
+
+        if(rarities.size()>0) {
+            petition.setLength(0);
+            for (String str : rarities) {
+                petition.append(str).append(",");
+            }
+            parametersToUse.put("rarity",petition.toString());
+        }
+
+
+        if(colors.size()>0) {
+
+            String AndOroperator;
+            if(switchColorsValue)
+                AndOroperator = ",";
+            else
+                AndOroperator = "|";
+
+            petition.setLength(0);
+            for (String str : colors) {
+                petition.append(str).append(AndOroperator);
+            }
+            parametersToUse.put("color",petition.toString());
+        }
+        Log.i("DEBUG","AAAAAAAAAAAAA  "+ parametersToUse.containsKey("rarity")+" "+parametersToUse.containsKey("color")+" "+parametersToUse.get("color")+" "+parametersToUse.get("rarity") );
+        return parametersToUse;
     }
 
 }
