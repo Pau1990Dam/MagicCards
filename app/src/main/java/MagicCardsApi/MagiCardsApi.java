@@ -20,9 +20,9 @@ import Pojos.Card;
 //https://docs.magicthegathering.io/
 
 public class MagiCardsApi {
-    private final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
+    private static final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
 
-    public ArrayList <Card> getCartas() {
+    public static ArrayList <Card> getCartas() {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .build();
@@ -31,7 +31,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public ArrayList <Card> getCartasByRarity(String kind) {
+    public static ArrayList <Card> getCartasByRarity(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("rarity", kind)
@@ -41,7 +41,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public ArrayList <Card> getCartasByColor(String kind) {
+    public static ArrayList <Card> getCartasByColor(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("colors", kind)
@@ -51,7 +51,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public ArrayList <Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
+    public static ArrayList <Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("rarity", kind)
@@ -64,7 +64,7 @@ public class MagiCardsApi {
 
 
     @Nullable
-    private ArrayList <Card> getJson(String url) {
+    private static ArrayList <Card> getJson(String url) {
         try {
             String JsonResponse = HttpUtils.get(url);
             return jsonParser(JsonResponse);
@@ -74,7 +74,7 @@ public class MagiCardsApi {
         return null;
     }
 
-    private ArrayList<Card>jsonParser(String jsonResponse) {
+    private static ArrayList<Card>jsonParser(String jsonResponse) {
         ArrayList<Card> cartas = new ArrayList<>();
         String [] cardColors;
         try {

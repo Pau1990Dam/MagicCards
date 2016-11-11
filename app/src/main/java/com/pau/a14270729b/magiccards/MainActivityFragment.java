@@ -133,20 +133,19 @@ public class MainActivityFragment extends Fragment {
                     String.valueOf(activeColors.size()));
 
             ArrayList<Card> cards;
-            MagiCardsApi api = new MagiCardsApi();
 
             TreeMap <String,String> parameters = petitionParametersPreparation(activeRarities,activeColors,colorsAndOr);
 
             if(parameters.size() == 2){
-                cards = api.getCartasByRaritiesAndColors(parameters.get("rarity"),parameters.get("color"));
+                cards = MagiCardsApi.getCartasByRaritiesAndColors(parameters.get("rarity"),parameters.get("color"));
             }else if(parameters.size() == 1 ){
 
                 if(parameters.containsKey("rarity"))
-                    cards = api.getCartasByRarity(parameters.get("rarity"));
+                    cards = MagiCardsApi.getCartasByRarity(parameters.get("rarity"));
                 else
-                    cards = api.getCartasByColor(parameters.get("color"));
+                    cards = MagiCardsApi.getCartasByColor(parameters.get("color"));
             }else{
-                cards = api.getCartas();
+                cards = MagiCardsApi.getCartas();
             }
 
             return cards;
