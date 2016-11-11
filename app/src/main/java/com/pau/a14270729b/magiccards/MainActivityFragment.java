@@ -3,6 +3,7 @@ package com.pau.a14270729b.magiccards;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -15,19 +16,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+
 
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeMap;
 
 import Adapter.CardAdapter;
+import ContentProvider.MagicContentProvider;
+import DatabaseSuit.DataManager;
 import MagicCardsApi.MagiCardsApi;
 import Pojos.Card;
+import nl.littlerobots.cupboard.tools.provider.UriHelper;
+
+import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -116,9 +121,9 @@ public class MainActivityFragment extends Fragment {
         task.execute();
     }
 
-    private class RefreshTask extends AsyncTask<Object, Object, ArrayList<Card>>{
+    private class RefreshTask extends AsyncTask<Object, Object, Object>{
         @Override
-        protected ArrayList<Card> doInBackground(Object... params) {
+        protected Object doInBackground(Object... params) {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             Set<String> activeRarities = new HashSet<>();
@@ -148,17 +153,13 @@ public class MainActivityFragment extends Fragment {
                 cards = MagiCardsApi.getCartas();
             }
 
-            return cards;
+            DataManager.deleteCards(getContext());
+            DataManager.saveCards(cards,getContext());
+
+            //return cards;
+            return null;
         }
 
-        @Override
-        protected void onPostExecute(ArrayList<Card> arr) {
-
-            adapter.clear();
-            for(Card card: arr){
-                adapter.add(card);
-            }
-        }
     }
 
     public TreeMap<String, String> petitionParametersPreparation(Set<String> rarities, Set<String> colors,

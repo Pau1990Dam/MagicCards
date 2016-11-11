@@ -12,7 +12,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 public class MagicContentProvider extends CupboardContentProvider {
 
-    public static final String AUTHORITY = BuildConfig.APPLICATION_ID+".provider";
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
 
     static {
         cupboard().register(Card.class);
