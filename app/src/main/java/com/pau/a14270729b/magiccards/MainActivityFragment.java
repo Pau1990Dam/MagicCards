@@ -1,5 +1,6 @@
 package com.pau.a14270729b.magiccards;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -38,7 +39,7 @@ import com.pau.a14270729b.magiccards.Pojos.Card;
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     View view;
-    ArrayList<Card> items;
+    private ProgressDialog dialog;
     private CardsCursorAdapter adapter;
     private StringBuilder petition;
 
@@ -61,11 +62,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 (inflater, R.layout.fragment_main, container, false);
         view = bindig.getRoot();
 
-
-
         petition = new StringBuilder();
 
         adapter = new CardsCursorAdapter(getContext(), Card.class);
+
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Loading...");
+
         bindig.lvCartas.setAdapter(adapter);
         bindig.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,7 +99,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_refresh) {
 
-            refresh();
             return true;
         }
 
@@ -130,6 +132,14 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
     private class RefreshTask extends AsyncTask<Object, Object, Object>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            dialog.show();
+        }
+
         @Override
         protected Object doInBackground(Object... params) {
 
@@ -166,6 +176,14 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
             //return cards;
             return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Object aVoid) {
+            super.onPostExecute(aVoid);
+
+            dialog.dismiss();
         }
 
     }
