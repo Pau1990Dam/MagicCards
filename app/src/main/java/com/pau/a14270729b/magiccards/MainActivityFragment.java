@@ -2,11 +2,14 @@ package com.pau.a14270729b.magiccards;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 
+import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
@@ -24,7 +28,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
-import com.pau.a14270729b.magiccards.Adapter.CardAdapter;
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
 import com.pau.a14270729b.magiccards.MagicCardsApi.MagiCardsApi;
 import com.pau.a14270729b.magiccards.Pojos.Card;
@@ -32,11 +35,11 @@ import com.pau.a14270729b.magiccards.Pojos.Card;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     View view;
     ArrayList<Card> items;
-    private CardAdapter adapter;
+    private CardsCursorAdapter adapter;
     private StringBuilder petition;
 
     public MainActivityFragment() {
@@ -62,12 +65,7 @@ public class MainActivityFragment extends Fragment {
 
         petition = new StringBuilder();
 
-        items = new ArrayList<>();
-        adapter = new CardAdapter(
-                getContext(),
-                R.layout.cartas_fila,
-                items
-        );
+        adapter = new CardsCursorAdapter(getContext(), Card.class);
         bindig.lvCartas.setAdapter(adapter);
         bindig.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,7 +76,7 @@ public class MainActivityFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        getLoaderManager().initLoader(0,null,this);
         return view;
     }
 
@@ -114,6 +112,21 @@ public class MainActivityFragment extends Fragment {
     private void refresh() {
         RefreshTask task = new RefreshTask();
         task.execute();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return DataManager.getCursorLoader(getContext());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
     }
 
     private class RefreshTask extends AsyncTask<Object, Object, Object>{
