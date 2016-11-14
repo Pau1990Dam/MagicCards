@@ -1,4 +1,4 @@
-package com.pau.a14270729b.magiccards.ContentProvider;
+package com.pau.a14270729b.magiccards.DatabaseSuit;
 
 import com.pau.a14270729b.magiccards.Pojos.Card;
 import nl.littlerobots.cupboard.tools.BuildConfig;

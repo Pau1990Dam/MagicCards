@@ -30,7 +30,7 @@
 
 
         <provider
-            android:name=".ContentProvider.MagicContentProvider"
+            android:name=".DatabaseSuit.MagicContentProvider"
             android:authorities="com.pau.a14270729b.magiccards.provider"
             android:exported="false" />
     </application>

@@ -5,7 +5,6 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
-import com.pau.a14270729b.magiccards.ContentProvider.MagicContentProvider;
 import com.pau.a14270729b.magiccards.Pojos.Card;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
 

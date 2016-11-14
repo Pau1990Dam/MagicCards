@@ -1,4 +1,4 @@
-package com.pau.a14270729b.magiccards.DatabaseSuit;
+package com.pau.a14270729b.magiccards.ShowDataFromDatabase;
 
 import android.content.Context;
 import android.database.Cursor;
