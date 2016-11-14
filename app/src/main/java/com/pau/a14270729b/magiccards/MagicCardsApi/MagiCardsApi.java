@@ -1,4 +1,4 @@
-package MagicCardsApi;
+package com.pau.a14270729b.magiccards.MagicCardsApi;
 
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -9,9 +9,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import HttpPetition.HttpUtils;
-import Pojos.Card;
+import com.pau.a14270729b.magiccards.HttpPetition.HttpUtils;
+import com.pau.a14270729b.magiccards.Pojos.Card;
 
 /**
  * Created by 14270729b on 14/10/16.
@@ -123,10 +124,10 @@ public class MagiCardsApi {
                     for(int j = 0; j < colors.length(); j++){
                         cardColors[j] = colors.getString(j);
                     }
-                    card.setColors(cardColors);
+                    card.setColors(Arrays.toString(cardColors));
                 }
                 else
-                    card.setColors(cardColors = new String []{"nd"});
+                    card.setColors("nd");
 
                 cartas.add(card);
             }

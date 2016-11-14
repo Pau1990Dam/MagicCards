@@ -17,7 +17,7 @@ import com.pau.a14270729b.magiccards.databinding.FragmentDetailBinding;
 
 import java.util.Arrays;
 
-import Pojos.Card;
+import com.pau.a14270729b.magiccards.Pojos.Card;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
@@ -64,7 +64,7 @@ public class DetailActivityFragment extends Fragment {
         binding.power.setText(Html.fromHtml("<b>POWER : </b>"+card.getPower()));
         binding.type.setText(Html.fromHtml("<b>TYPE : </b>"+card.getType()));
         binding.rarity.setText(Html.fromHtml("<b>RARITY : </b>"+card.getRarity()));
-        binding.colors.setText(Html.fromHtml("<b>COLORS : </b>"+Arrays.toString(card.getColors())));
+        binding.colors.setText(Html.fromHtml("<b>COLORS : </b>"+card.getColors()));
         binding.cmc.setText(Html.fromHtml("<b>MANA COST : </b>"+card.getCmc()));
         binding.text.setText(Html.fromHtml("<b>INFO : </b>"+card.getText()));
 

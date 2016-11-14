@@ -1,4 +1,4 @@
-package HttpPetition;
+package com.pau.a14270729b.magiccards.HttpPetition;
 
 /**
  * Created by 14270729b on 14/10/16.

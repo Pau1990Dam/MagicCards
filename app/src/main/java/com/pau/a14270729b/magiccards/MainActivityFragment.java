@@ -3,7 +3,6 @@ package com.pau.a14270729b.magiccards;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -25,14 +24,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
-import Adapter.CardAdapter;
-import ContentProvider.MagicContentProvider;
-import DatabaseSuit.DataManager;
-import MagicCardsApi.MagiCardsApi;
-import Pojos.Card;
-import nl.littlerobots.cupboard.tools.provider.UriHelper;
-
-import static nl.qbusict.cupboard.CupboardFactory.cupboard;
+import com.pau.a14270729b.magiccards.Adapter.CardAdapter;
+import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
+import com.pau.a14270729b.magiccards.MagicCardsApi.MagiCardsApi;
+import com.pau.a14270729b.magiccards.Pojos.Card;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -152,7 +147,7 @@ public class MainActivityFragment extends Fragment {
             }else{
                 cards = MagiCardsApi.getCartas();
             }
-
+            Log.i("DEBUG"+" INFOOOOOOOOO ", cards != null ? cards.toString() : null);
             DataManager.deleteCards(getContext());
             DataManager.saveCards(cards,getContext());
 

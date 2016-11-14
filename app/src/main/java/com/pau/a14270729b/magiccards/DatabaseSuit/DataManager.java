@@ -1,12 +1,12 @@
-package DatabaseSuit;
+package com.pau.a14270729b.magiccards.DatabaseSuit;
 
 import android.content.Context;
 import android.net.Uri;
 
 import java.util.ArrayList;
 
-import ContentProvider.MagicContentProvider;
-import Pojos.Card;
+import com.pau.a14270729b.magiccards.ContentProvider.MagicContentProvider;
+import com.pau.a14270729b.magiccards.Pojos.Card;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;

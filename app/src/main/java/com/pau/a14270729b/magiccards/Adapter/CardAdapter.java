@@ -1,4 +1,4 @@
-package Adapter;
+package com.pau.a14270729b.magiccards.Adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -16,7 +16,7 @@ import com.pau.a14270729b.magiccards.databinding.CartasFilaBinding;
 
 import java.util.List;
 
-import Pojos.Card;
+import com.pau.a14270729b.magiccards.Pojos.Card;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**

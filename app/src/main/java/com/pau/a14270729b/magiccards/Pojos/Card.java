@@ -1,4 +1,4 @@
-package Pojos;
+package com.pau.a14270729b.magiccards.Pojos;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -15,14 +15,14 @@ public class Card implements Serializable {
     String type;
     String imageUrl;
     String id;
-    String [] colors;
+    String colors;
     String power;
     int cmc;
 
 
     public Card(){}
 
-    public Card(String name, String rarity, String text, String type, String imageUrl, String id, String[] colors, String power, int cmc) {
+    public Card(String name, String rarity, String text, String type, String imageUrl, String id, String colors, String power, int cmc) {
         this.name = name;
         this.rarity = rarity;
         this.text = text;
@@ -42,9 +42,9 @@ public class Card implements Serializable {
 
     public void setCmc(int cmc) { this.cmc = cmc; }
 
-    public String [] getColors() { return colors; }
+    public String getColors() { return colors; }
 
-    public void setColors(String [] colors) { this.colors = colors; }
+    public void setColors(String colors) { this.colors = colors; }
 
     public String getName() {
         return name;
@@ -103,7 +103,7 @@ public class Card implements Serializable {
                 ", type='" + type + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", id='" + id + '\'' +
-                ", colors=" + Arrays.toString(colors) +
+                ", colors=" + colors +
                 ", power='" + power + '\'' +
                 ", cmc=" + cmc +
                 '}';
