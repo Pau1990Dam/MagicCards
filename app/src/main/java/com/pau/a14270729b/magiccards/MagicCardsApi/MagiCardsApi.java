@@ -90,8 +90,6 @@ public class MagiCardsApi {
                 card.setRarity(object.getString("rarity"));
                 card.setType(object.getString("type"));
 
-
-
                 if(object.has("imageUrl"))
                     card.setImageUrl(object.getString("imageUrl"));
                 else
