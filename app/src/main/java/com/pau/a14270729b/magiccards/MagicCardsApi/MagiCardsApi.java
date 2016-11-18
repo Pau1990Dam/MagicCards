@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import com.pau.a14270729b.magiccards.HttpPetition.HttpUtils;
 import com.pau.a14270729b.magiccards.Pojos.Card;
@@ -23,7 +24,7 @@ import com.pau.a14270729b.magiccards.Pojos.Card;
 public class MagiCardsApi {
     private static final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
 
-    public static ArrayList <Card> getCartas() {
+    public static HashSet<Card> getCartas() {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .build();
@@ -32,7 +33,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public static ArrayList <Card> getCartasByRarity(String kind) {
+    public static HashSet <Card> getCartasByRarity(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("rarity", kind)
@@ -42,7 +43,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public static ArrayList <Card> getCartasByColor(String kind) {
+    public static HashSet <Card> getCartasByColor(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("colors", kind)
@@ -52,7 +53,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public static ArrayList <Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
+    public static HashSet <Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("rarity", kind)
@@ -65,7 +66,7 @@ public class MagiCardsApi {
 
 
     @Nullable
-    private static ArrayList <Card> getJson(String url) {
+    private static HashSet <Card> getJson(String url) {
         try {
             String JsonResponse = HttpUtils.get(url);
             return jsonParser(JsonResponse);
@@ -75,8 +76,8 @@ public class MagiCardsApi {
         return null;
     }
 
-    private static ArrayList<Card>jsonParser(String jsonResponse) {
-        ArrayList<Card> cartas = new ArrayList<>();
+    private static HashSet<Card>jsonParser(String jsonResponse) {
+        HashSet<Card> cartas = new HashSet<>();
         String [] cardColors;
         try {
             JSONObject data = new JSONObject(jsonResponse);

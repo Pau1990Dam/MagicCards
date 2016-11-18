@@ -98,7 +98,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_refresh) {
-
+            refresh();
             return true;
         }
 
@@ -108,7 +108,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onStart() {
         super.onStart();
-        refresh();
     }
 
     private void refresh() {
@@ -155,7 +154,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size())+" Colors size: "+
                     String.valueOf(activeColors.size()));
 
-            ArrayList<Card> cards;
+            HashSet<Card> cards;
 
             TreeMap <String,String> parameters = petitionParametersPreparation(activeRarities,activeColors,colorsAndOr);
 
@@ -171,7 +170,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 cards = MagiCardsApi.getCartas();
             }
             Log.i("DEBUG"+" INFOOOOOOOOO ", cards != null ? cards.toString() : null);
-            DataManager.deleteCards(getContext());
+            //DataManager.deleteCards(getContext());
             DataManager.saveCards(cards,getContext());
 
             //return cards;
