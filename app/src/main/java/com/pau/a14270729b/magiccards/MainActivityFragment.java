@@ -154,7 +154,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size())+" Colors size: "+
                     String.valueOf(activeColors.size()));
 
-            HashSet<Card> cards;
+            TreeMap<String, Card> cards;
 
             TreeMap <String,String> parameters = petitionParametersPreparation(activeRarities,activeColors,colorsAndOr);
 
