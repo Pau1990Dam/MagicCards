@@ -10,7 +10,7 @@
     <!-- Strings related to CARD Settings -->
 
     <!-- Common, Uncommon, Rare, Mythic Rare, Special, Basic Land-->
-    <string name="card_settings">Card Filter Settings</string>
+    <string name="card_settings">Card Settings</string>
 
     <string name="card_settings_section_rarity">RARITIES</string>
 

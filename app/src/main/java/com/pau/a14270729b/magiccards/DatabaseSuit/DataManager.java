@@ -30,9 +30,8 @@ public class DataManager {
 
     public static void saveCards(TreeMap<String, Card> cards, Context context) {
 
-        Collection <Card> collection = cards.values();
-
         avoidDuplications(context, cards);
+        Collection <Card> collection = cards.values();
 
         Log.i("DEBUG" + " CARDS SIZE ", "eeeeiii : " + cards.size());
         if (cards.size() > 0)
@@ -53,8 +52,7 @@ public class DataManager {
                 query();
         for(Card card: itr){
             Log.i("DEBUG"+" CARDS SIZE ", "eeeeiii : "+card.toString());
-            if( cards.containsKey(card.toString()) )
-                cards.remove(card.toString());
+            cards.remove(card.toString());
         }
     }
 
