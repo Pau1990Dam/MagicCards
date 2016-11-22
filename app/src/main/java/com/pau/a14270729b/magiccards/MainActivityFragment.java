@@ -25,6 +25,7 @@ import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
@@ -154,7 +155,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size())+" Colors size: "+
                     String.valueOf(activeColors.size()));
 
-            TreeMap<String, Card> cards;
+            HashMap<String, Card> cards;
 
             TreeMap <String,String> parameters = petitionParametersPreparation(activeRarities,activeColors,colorsAndOr);
 

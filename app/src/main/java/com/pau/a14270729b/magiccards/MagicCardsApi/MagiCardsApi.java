@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
 
@@ -25,7 +26,7 @@ import com.pau.a14270729b.magiccards.Pojos.Card;
 public class MagiCardsApi {
     private static final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
 
-    public static TreeMap<String, Card> getCartas() {
+    public static HashMap<String, Card> getCartas() {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .build();
@@ -34,7 +35,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public static TreeMap<String, Card> getCartasByRarity(String kind) {
+    public static HashMap<String, Card> getCartasByRarity(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("rarity", kind)
@@ -44,7 +45,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public static TreeMap<String, Card> getCartasByColor(String kind) {
+    public static HashMap<String, Card> getCartasByColor(String kind) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("colors", kind)
@@ -54,7 +55,7 @@ public class MagiCardsApi {
         return getJson(url);
     }
 
-    public static TreeMap<String, Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
+    public static HashMap<String, Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("rarity", kind)
@@ -67,7 +68,7 @@ public class MagiCardsApi {
 
 
     @Nullable
-    private static TreeMap<String, Card> getJson(String url) {
+    private static HashMap<String, Card> getJson(String url) {
         try {
             String JsonResponse = HttpUtils.get(url);
             return jsonParser(JsonResponse);
@@ -77,8 +78,8 @@ public class MagiCardsApi {
         return null;
     }
 
-    private static TreeMap<String, Card> jsonParser(String jsonResponse) {
-        TreeMap<String, Card> cartas = new TreeMap<>();
+    private static HashMap<String, Card> jsonParser(String jsonResponse) {
+        HashMap<String, Card> cartas = new HashMap<>();
         String [] cardColors;
         try {
             JSONObject data = new JSONObject(jsonResponse);

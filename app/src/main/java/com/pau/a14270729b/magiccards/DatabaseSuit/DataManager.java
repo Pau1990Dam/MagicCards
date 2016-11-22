@@ -9,6 +9,7 @@ import android.widget.CursorAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -28,7 +29,7 @@ public class DataManager {
     private static UriHelper URI_HELPER = UriHelper.with(MagicContentProvider.AUTHORITY);
     private static Uri CARD_URI = URI_HELPER.getUri(Card.class);
 
-    public static void saveCards(TreeMap<String, Card> cards, Context context) {
+    public static void saveCards(HashMap<String, Card> cards, Context context) {
 
         avoidDuplications(context, cards);
         Collection <Card> collection = cards.values();
@@ -46,7 +47,7 @@ public class DataManager {
         return new CursorLoader(context, CARD_URI, null, null, null, null);
     }
 
-    private static void avoidDuplications(Context context, TreeMap<String, Card> cards) {
+    private static void avoidDuplications(Context context, HashMap<String, Card> cards) {
 
         QueryResultIterable<Card> itr = cupboard().withContext(context).query(CARD_URI, Card.class).
                 query();
