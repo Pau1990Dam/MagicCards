@@ -4,6 +4,7 @@ package com.pau.a14270729b.magiccards;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -23,7 +24,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -194,6 +199,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
+
         }
 
         @Override
@@ -279,6 +285,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
 
+            Set<String> bla = new HashSet<>();
+            Preference pref = findPreference("color");
+            SharedPreferences shared = pref.getSharedPreferences();
+            bla = shared.getStringSet("color",bla);
+            pref.setSummary(Arrays.toString(bla.toArray()));
+            bla = new HashSet<>();
+            pref = findPreference("rarity");
+            shared = pref.getSharedPreferences();
+            bla = shared.getStringSet("rarity",bla);
+            pref.setSummary(Arrays.toString(bla.toArray()));
         }
 
         @Override
