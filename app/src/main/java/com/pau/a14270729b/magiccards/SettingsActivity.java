@@ -15,16 +15,13 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -285,16 +282,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
 
-            Set<String> bla = new HashSet<>();
+            Set<String> activePreferences = new HashSet<>();
             Preference pref = findPreference("color");
             SharedPreferences shared = pref.getSharedPreferences();
-            bla = shared.getStringSet("color",bla);
-            pref.setSummary(Arrays.toString(bla.toArray()));
-            bla = new HashSet<>();
+            StringBuilder summary = new StringBuilder();
+
+            activePreferences = shared.getStringSet("color",activePreferences);
+            summary = summary.append(Arrays.toString(activePreferences.toArray()));
+
+            //formato de la cadena del summary
+            summary.deleteCharAt(0);
+            summary.deleteCharAt(summary.indexOf("]"));
+            //Colors summary
+            pref.setSummary(summary.toString().toUpperCase());
+
             pref = findPreference("rarity");
             shared = pref.getSharedPreferences();
-            bla = shared.getStringSet("rarity",bla);
-            pref.setSummary(Arrays.toString(bla.toArray()));
+            activePreferences = shared.getStringSet("rarity",activePreferences);
+            summary.setLength(0);
+
+            //formato de la cadena del summary
+            summary = summary.append(Arrays.toString(activePreferences.toArray()));
+            summary.deleteCharAt(0);
+            summary.deleteCharAt(summary.indexOf("]"));
+            //Rarities summary
+            pref.setSummary(summary.toString().toUpperCase());
         }
 
         @Override
