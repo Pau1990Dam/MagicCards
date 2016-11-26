@@ -11,12 +11,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public class HttpUtils {
     public static String get(String dataUrl) throws IOException {
         URL url = new URL(dataUrl);
         String response = null;
-
+        System.out.println(dataUrl);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -39,4 +41,22 @@ public class HttpUtils {
         rd.close();
         return response.toString();
     }
+
+    public static int getTotalCount(String dataUrl) throws IOException {
+        URL url = new URL(dataUrl);
+        int response = 0;
+
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        Map<String, List<String>> map = urlConnection.getHeaderFields();
+        response = Integer.parseInt(map.get("Total-Count").get(0));
+
+        return response;
+    }
 }
+        /*for (Map.Entry<String, List<String>> k : urlConnection.getHeaderFields().entrySet()) {
+            for (String v : k.getValue()){
+                if(k.getKey()!=null)
+                    if(k.getKey().equals("Total-Count"))
+                        response = Integer.parseInt(v);
+            }
+        }*/

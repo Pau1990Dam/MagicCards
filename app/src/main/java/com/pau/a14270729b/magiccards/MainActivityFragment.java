@@ -24,7 +24,7 @@ import android.widget.AdapterView;
 import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,6 +33,8 @@ import java.util.TreeMap;
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
 import com.pau.a14270729b.magiccards.MagicCardsApi.MagiCardsApi;
 import com.pau.a14270729b.magiccards.Pojos.Card;
+
+import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -80,7 +82,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 startActivity(intent);
             }
         });
-        getLoaderManager().initLoader(0,null,this);
+       getLoaderManager().initLoader(0,null,this);
         return view;
     }
 
@@ -156,25 +158,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                     String.valueOf(activeColors.size()));
 
             HashMap<String, Card> cards;
-
-            TreeMap <String,String> parameters = petitionParametersPreparation(activeRarities,activeColors,colorsAndOr);
-
-            if(parameters.size() == 2){
-                cards = MagiCardsApi.getCartasByRaritiesAndColors(parameters.get("rarity"),parameters.get("color"));
-            }else if(parameters.size() == 1 ){
-
-                if(parameters.containsKey("rarity"))
-                    cards = MagiCardsApi.getCartasByRarity(parameters.get("rarity"));
-                else
-                    cards = MagiCardsApi.getCartasByColor(parameters.get("color"));
-            }else{
-                cards = MagiCardsApi.getCartas();
+            Cursor cursor = DataManager.getCursor(getContext());
+            cards = MagiCardsApi.getAllCartas(cursor.getCount());
+            if(cards!=null){
+                DataManager.deleteCards(getContext());
+                DataManager.saveCards(cards,getContext());
             }
-            Log.i("DEBUG"+" INFOOOOOOOOO ", cards != null ? cards.toString() : null);
-            //DataManager.deleteCards(getContext());
-            DataManager.saveCards(cards,getContext());
 
-            //return cards;
             return null;
         }
 
@@ -186,37 +176,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             dialog.dismiss();
         }
 
-    }
-
-    public TreeMap<String, String> petitionParametersPreparation(Set<String> rarities, Set<String> colors,
-                                                                 Boolean switchColorsValue){
-        TreeMap <String,String>parametersToUse = new TreeMap<>();
-
-        if(rarities.size()>0) {
-            petition.setLength(0);
-            for (String str : rarities) {
-                petition.append(str).append(",");
-            }
-            parametersToUse.put("rarity",petition.toString());
-        }
-
-
-        if(colors.size()>0) {
-
-            String AndOroperator;
-            if(switchColorsValue)
-                AndOroperator = ",";
-            else
-                AndOroperator = "|";
-
-            petition.setLength(0);
-            for (String str : colors) {
-                petition.append(str).append(AndOroperator);
-            }
-            parametersToUse.put("color",petition.toString());
-        }
-        Log.i("DEBUG","AAAAAAAAAAAAA  "+ parametersToUse.containsKey("rarity")+" "+parametersToUse.containsKey("color")+" "+parametersToUse.get("color")+" "+parametersToUse.get("rarity") );
-        return parametersToUse;
     }
 
 }

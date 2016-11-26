@@ -38,6 +38,6 @@ public class CardsCursorAdapter extends CupboardCursorAdapter<Card> {
         binding.rarity.setText(model.getRarity());
         binding.text.setText(model.getText());
         Glide.with(context).load(model.getImageUrl()).bitmapTransform(
-                new RoundedCornersTransformation(context,14,1)).into(binding.imgUrl);
+                new RoundedCornersTransformation(context,14,1)).error(R.mipmap.ic_launcher).into(binding.imgUrl);
     }
 }

@@ -5,14 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.CursorLoader;
 import android.util.Log;
-import android.widget.CursorAdapter;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.TreeMap;
 
 import com.pau.a14270729b.magiccards.Pojos.Card;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
@@ -39,12 +34,16 @@ public class DataManager {
             cupboard().withContext(context).put(CARD_URI, Card.class, collection);
     }
 
+    public static Cursor getCursor(Context context){
+        return cupboard().withContext(context).query(CARD_URI, Card.class).getCursor();
+    }
+
     public static void deleteCards(Context context) {
         cupboard().withContext(context).delete(CARD_URI, "_id > ?", "0");
     }
 
     public static CursorLoader getCursorLoader(Context context) {
-        return new CursorLoader(context, CARD_URI, null, null, null, null);
+        return new CursorLoader(context, CARD_URI, null, null, null, null);  //Activity,  Table, Projection, Select, arguments (where if ...), order (order by)
     }
 
     private static void avoidDuplications(Context context, HashMap<String, Card> cards) {

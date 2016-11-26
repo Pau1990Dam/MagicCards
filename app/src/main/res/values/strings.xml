@@ -37,7 +37,7 @@
     <string name="card_settings_section_colors">COLORS</string>
 
     <string name="ColorsAndOr">AND</string>
-    <string name="ColorsAndOr_summary">If Active all checked colors will be search as one condition</string>
+    <string name="ColorsAndOr_summary">Search for cards that have all checked colors</string>
 
     <string name="color_settings">Choose color</string>
     <string-array name="color_names">
@@ -64,6 +64,8 @@
         <item>3</item>
         <item>4</item>
 -->
+    <!--Dabase Cards Settings -->
+    <string name="table_cards_settings">DATABASE CARDS SETTINGS</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

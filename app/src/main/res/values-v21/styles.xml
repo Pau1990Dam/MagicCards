@@ -6,4 +6,11 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+    <style name="DialogNoTitleDark" parent="AppTheme">
+        <!-- hide the Window Title -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/coloBlack</item>
+    </style>
 </resources>

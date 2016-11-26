@@ -1,85 +1,76 @@
 package com.pau.a14270729b.magiccards.MagicCardsApi;
 
 import android.net.Uri;
-import android.support.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeMap;
+
 
 import com.pau.a14270729b.magiccards.HttpPetition.HttpUtils;
 import com.pau.a14270729b.magiccards.Pojos.Card;
-
-/**
- * Created by 14270729b on 14/10/16.
- */
 
 //https://docs.magicthegathering.io/
 
 public class MagiCardsApi {
     private static final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
 
-    public static HashMap<String, Card> getCartas() {
+    public static HashMap<String, Card> getAllCartas(int dbCards) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
+                .appendQueryParameter("pageSize","1")
                 .build();
         String url = builtUri.toString();
 
-        return getJson(url);
+        return getAllPages(url, dbCards);
     }
 
-    public static HashMap<String, Card> getCartasByRarity(String kind) {
-        Uri builtUri = Uri.parse(BASE_URL)
-                .buildUpon()
-                .appendQueryParameter("rarity", kind)
-                .build();
-        String url = builtUri.toString();
-
-        return getJson(url);
-    }
-
-    public static HashMap<String, Card> getCartasByColor(String kind) {
-        Uri builtUri = Uri.parse(BASE_URL)
-                .buildUpon()
-                .appendQueryParameter("colors", kind)
-                .build();
-        String url = builtUri.toString();
-
-        return getJson(url);
-    }
-
-    public static HashMap<String, Card> getCartasByRaritiesAndColors(String kind, String Kind2) {
-        Uri builtUri = Uri.parse(BASE_URL)
-                .buildUpon()
-                .appendQueryParameter("rarity", kind)
-                .appendQueryParameter("colors", Kind2)
-                .build();
-        String url = builtUri.toString();
-
-        return getJson(url);
-    }
-
-
-    @Nullable
-    private static HashMap<String, Card> getJson(String url) {
+    public static HashMap<String, Card> getAllPages(String url, int dbCards){
         try {
-            String JsonResponse = HttpUtils.get(url);
-            return jsonParser(JsonResponse);
+                int numCards = HttpUtils.getTotalCount(url);
+
+                if(numCards==dbCards && numCards>0)return null;
+
+                final int PAGES;
+
+                if(numCards%100>0)
+                    PAGES = (numCards/100)+1;
+                else
+                    PAGES = numCards/100;
+
+            HashMap<String,Card> response = new HashMap<>();
+            for(int i = 1; i<=PAGES;i++){
+                Uri builtUri = Uri.parse(BASE_URL)
+                        .buildUpon()
+                        .appendQueryParameter("page",String.valueOf(i))
+                        .build();
+                String jsonUrl = builtUri.toString();
+                getJson(jsonUrl,response);
+            }
+
+            return response;
+
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         return null;
     }
 
-    private static HashMap<String, Card> jsonParser(String jsonResponse) {
-        HashMap<String, Card> cartas = new HashMap<>();
+    private static void getJson(String url, HashMap<String, Card> cards) {
+        try {
+            String JsonResponse = HttpUtils.get(url);
+            jsonParser(JsonResponse, cards);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private static void jsonParser(String jsonResponse, HashMap<String, Card> cards) {
         String [] cardColors;
         try {
             JSONObject data = new JSONObject(jsonResponse);
@@ -130,12 +121,11 @@ public class MagiCardsApi {
                 else
                     card.setColors("nd");
 
-                cartas.put(card.toString(),card);
+                cards.put(card.toString(),card);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return cartas;
     }
 
 }

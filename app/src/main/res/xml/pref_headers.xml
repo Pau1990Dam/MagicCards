@@ -21,3 +21,4 @@
         android:title="@string/pref_header_data_sync" />
 
 </preference-headers>
+    <!--android:style="@style/DialogNoTitleDark"-->

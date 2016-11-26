@@ -11,7 +11,7 @@
             android:title="@string/rarity_settings"
             android:summary="Más tarde solucionaremos lo del summary"
             />
-        <!-- android:defaultValue="@array/defaults" -->
+        <!-- android:defaultValue="@array/defaults"   -->
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -30,6 +30,8 @@
             android:title="@string/color_settings"
             android:summary="Más tarde solucionaremos lo del summary"
             />
-        <!-- android:defaultValue="@array/defaults" -->
+
     </PreferenceCategory>
 </PreferenceScreen>
+
+    <!-- android:defaultValue="@array/defaults" -->

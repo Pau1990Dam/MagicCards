@@ -1,7 +1,6 @@
 package com.pau.a14270729b.magiccards.Pojos;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * Created by 14270729b on 14/10/16.

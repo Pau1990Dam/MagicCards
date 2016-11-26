@@ -13,10 +13,6 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.pau.a14270729b.magiccards.databinding.FragmentDetailBinding;
-//import com.pau.a14270729b.magiccards.databinding.CartasFilaBinding;
-
-import java.util.Arrays;
-
 import com.pau.a14270729b.magiccards.Pojos.Card;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -57,10 +53,12 @@ public class DetailActivityFragment extends Fragment {
 
         getActivity().setTitle(card.getName().toUpperCase());
 
-
-
-        Glide.with(getContext()).load(card.getImageUrl()).bitmapTransform(
+        if(!card.getImageUrl().equals(""))
+            Glide.with(getContext()).load(card.getImageUrl()).bitmapTransform(
                 new RoundedCornersTransformation(getContext(),14,1)).into(binding.imageDetail);
+        else
+            Glide.with(getContext()).load(R.mipmap.ic_launcher).into(binding.imageDetail);
+
         binding.power.setText(Html.fromHtml("<b>POWER : </b>"+card.getPower()));
         binding.type.setText(Html.fromHtml("<b>TYPE : </b>"+card.getType()));
         binding.rarity.setText(Html.fromHtml("<b>RARITY : </b>"+card.getRarity()));
