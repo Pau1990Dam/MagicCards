@@ -2,16 +2,13 @@ package com.pau.a14270729b.magiccards;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,21 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-
 import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
-
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeMap;
 
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
 import com.pau.a14270729b.magiccards.MagicCardsApi.MagiCardsApi;
 import com.pau.a14270729b.magiccards.Pojos.Card;
 
-import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,7 +35,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     View view;
     private ProgressDialog dialog;
     private CardsCursorAdapter adapter;
-    private StringBuilder petition;
 
     public MainActivityFragment() {
     }
@@ -65,7 +55,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 (inflater, R.layout.fragment_main, container, false);
         view = bindig.getRoot();
 
-        petition = new StringBuilder();
 
         adapter = new CardsCursorAdapter(getContext(), Card.class);
 
@@ -111,6 +100,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onStart() {
         super.onStart();
+        getLoaderManager().restartLoader(0,null,this);
     }
 
     private void refresh() {
@@ -145,18 +135,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         @Override
         protected Object doInBackground(Object... params) {
 
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            Set<String> activeRarities = new HashSet<>();
-            Set<String> activeColors = new HashSet<>();
-            boolean colorsAndOr = true;
-
-            activeRarities = preferences.getStringSet("rarity", activeRarities);
-            activeColors = preferences.getStringSet("color", activeColors);
-            colorsAndOr = preferences.getBoolean("ColorsAndOr",colorsAndOr);
-
-            Log.i("DEBUG","Cheeeee  "+ String.valueOf(activeRarities.size())+" Colors size: "+
-                    String.valueOf(activeColors.size()));
-
             HashMap<String, Card> cards;
             Cursor cursor = DataManager.getCursor(getContext());
             cards = MagiCardsApi.getAllCartas(cursor.getCount());
@@ -167,7 +145,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
             return null;
         }
-
 
         @Override
         protected void onPostExecute(Object aVoid) {

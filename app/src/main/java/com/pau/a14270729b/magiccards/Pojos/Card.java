@@ -11,27 +11,40 @@ public class Card implements Serializable {
     String name;
     String rarity;
     String text;
+    String flavor;
     String type;
     String imageUrl;
     String id;
     String colors;
     String power;
+    String toughness;
     int cmc;
 
 
     public Card(){}
 
-    public Card(String name, String rarity, String text, String type, String imageUrl, String id, String colors, String power, int cmc) {
+    public Card(String name, String rarity, String text, String flavor, String type, String imageUrl,
+                String id, String colors, String power, String toughness, int cmc) {
         this.name = name;
         this.rarity = rarity;
         this.text = text;
+        this.flavor = flavor;
         this.type = type;
         this.imageUrl = imageUrl;
         this.id = id;
         this.colors = colors;
         this.power = power;
+        this.toughness = toughness;
         this.cmc = cmc;
     }
+
+    public String getFlavor() { return flavor; }
+
+    public void setFlavor(String flavor) { this.flavor = flavor; }
+
+    public String getToughness() { return toughness; }
+
+    public void setToughness(String toughness) { this.toughness = toughness; }
 
     public String getPower() { return power; }
 
@@ -99,11 +112,13 @@ public class Card implements Serializable {
                 "name='" + name + '\'' +
                 ", rarity='" + rarity + '\'' +
                 ", text='" + text + '\'' +
+                ", flavor='" + flavor + '\'' +
                 ", type='" + type + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", id='" + id + '\'' +
-                ", colors=" + colors +
+                ", colors='" + colors + '\'' +
                 ", power='" + power + '\'' +
+                ", toughness='" + toughness + '\'' +
                 ", cmc=" + cmc +
                 '}';
     }

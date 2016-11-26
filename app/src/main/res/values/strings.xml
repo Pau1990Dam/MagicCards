@@ -36,9 +36,6 @@
     <!--colors -->
     <string name="card_settings_section_colors">COLORS</string>
 
-    <string name="ColorsAndOr">AND</string>
-    <string name="ColorsAndOr_summary">Search for cards that have all checked colors</string>
-
     <string name="color_settings">Choose color</string>
     <string-array name="color_names">
         <item>White</item>
@@ -46,6 +43,33 @@
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
+        <item>Colorless</item>
+        <item>Azorius (White, Blue)</item>
+        <item>Dimir (Blue, Black)</item>
+        <item>Rakdos (Black, Red)</item>
+        <item>Gruul (Red, Green)</item>
+        <item>Selesnya (Green, White)</item>
+        <item>Orzhov (White, Black)</item>
+        <item>Izzet (Blue, Red)</item>
+        <item>Golgari (Black, Green)</item>
+        <item>Boros (Red, White)</item>
+        <item>Simic (Green, Blue)</item>
+        <item>Bant (Green, White, Blue)</item>
+        <item>Esper (White, Blue, Black)</item>
+        <item>Grixis (Blue, Black, Red)</item>
+        <item>Jund (Black, Red, Green)</item>
+        <item>Naya (Red, Green, White)</item>
+        <item>Abzan (White, Black, Green)</item>
+        <item>Jeskai (Blue, Red, White)</item>
+        <item>Sultai (Black, Green, Blue)</item>
+        <item>Mardu (Red, White, Black)</item>
+        <item>Temur (Green, Blue, Red)</item>
+        <item>Glint (Blue, Black, Red, Green)</item>
+        <item>Yore (White, Blue, Black, Red)</item>
+        <item>Ink (White, Blue, Red, Green)</item>
+        <item>Dune (White, Black, Red, Green)</item>
+        <item>Witch(White Blue Black Green)</item>
+        <item>WUBRG (White, Blue, Black, Red, Green)</item>
     </string-array>
     <string-array name="color_values">
         <item>White</item>
@@ -53,6 +77,33 @@
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
+        <item>Colorless</item>
+        <item>White Blue</item>
+        <item>Blue Black</item>
+        <item>Black Red</item>
+        <item>Red Green</item>
+        <item>White Green</item>
+        <item>White Black</item>
+        <item>Blue Red</item>
+        <item>Black Green</item>
+        <item>White Red</item>
+        <item>Blue Green</item>
+        <item>White Blue Green</item>
+        <item>White Blue Black</item>
+        <item>Blue Black Red</item>
+        <item>Black Red Green</item>
+        <item>White Red Green</item>
+        <item>White Black Green</item>
+        <item>White Blue Red</item>
+        <item>Blue Black Green</item>
+        <item>White Black Red</item>
+        <item>Blue Red Green</item>
+        <item>Blue Black Red Green</item>
+        <item>White Blue Black Red</item>
+        <item>White Blue Red Green</item>
+        <item>White Black Red Green</item>
+        <item>White Blue Black Green</item>
+        <item>White Blue Black Red Green</item>
     </string-array>
     <string-array name="color_defaults">
         <item>White</item>

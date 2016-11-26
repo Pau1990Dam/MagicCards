@@ -32,8 +32,8 @@ public class MagiCardsApi {
 
     public static HashMap<String, Card> getAllPages(String url, int dbCards){
         try {
-                int numCards = HttpUtils.getTotalCount(url);
-
+                //int numCards = HttpUtils.getTotalCount(url);
+                int numCards = 1000;
                 if(numCards==dbCards && numCards>0)return null;
 
                 final int PAGES;
@@ -55,7 +55,7 @@ public class MagiCardsApi {
 
             return response;
 
-        } catch (IOException e1) {
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
         return null;
@@ -94,6 +94,11 @@ public class MagiCardsApi {
                 else
                     card.setText("none");
 
+                if(object.has("flavor"))
+                    card.setFlavor(object.getString("flavor"));
+                else
+                    card.setFlavor("none");
+
                 if(object.has("id"))
                     card.setId(object.getString("id"));
                 else
@@ -103,6 +108,11 @@ public class MagiCardsApi {
                     card.setPower(object.getString("power"));
                 else
                     card.setPower("nd");
+
+                if(object.has("toughness"))
+                    card.setToughness(object.getString("toughness"));
+                else
+                    card.setToughness("nd");
 
                 if(object.has("cmc"))
                     card.setCmc(object.getInt("cmc"));
@@ -116,10 +126,11 @@ public class MagiCardsApi {
                     for(int j = 0; j < colors.length(); j++){
                         cardColors[j] = colors.getString(j);
                     }
-                    card.setColors(Arrays.toString(cardColors));
+                    card.setColors(Arrays.toString(cardColors).replace(","," ").
+                            replace("[","").replace("]",""));
                 }
                 else
-                    card.setColors("nd");
+                    card.setColors("Colorless");
 
                 cards.put(card.toString(),card);
             }

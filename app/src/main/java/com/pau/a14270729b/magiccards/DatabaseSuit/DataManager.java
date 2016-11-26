@@ -1,13 +1,18 @@
 package com.pau.a14270729b.magiccards.DatabaseSuit;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.content.CursorLoader;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.pau.a14270729b.magiccards.Pojos.Card;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
@@ -26,7 +31,7 @@ public class DataManager {
 
     public static void saveCards(HashMap<String, Card> cards, Context context) {
 
-        avoidDuplications(context, cards);
+      //  avoidDuplications(context, cards);
         Collection <Card> collection = cards.values();
 
         Log.i("DEBUG" + " CARDS SIZE ", "eeeeiii : " + cards.size());
@@ -43,7 +48,62 @@ public class DataManager {
     }
 
     public static CursorLoader getCursorLoader(Context context) {
-        return new CursorLoader(context, CARD_URI, null, null, null, null);  //Activity,  Table, Projection, Select, arguments (where if ...), order (order by)
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> activeRarities = new HashSet<>();
+        Set<String> activeColors = new HashSet<>();
+
+        activeRarities = preferences.getStringSet("rarity", activeRarities);
+        activeColors = preferences.getStringSet("color", activeColors);
+
+
+        String select = "";
+        String args [];
+        //System.out.println("Restart "+args.length);
+        //if(args.length==0)return null;
+        if(activeColors.size()+activeRarities.size()==37)return new CursorLoader(context, CARD_URI, null, null, null, null);
+        select+="(";
+        int i = 0;
+        if(!activeColors.isEmpty()&&!activeRarities.isEmpty()){
+            args = new String[activeColors.size()+activeRarities.size()];
+            for(String color: activeColors){
+                select+="colors=? OR ";
+                args[i]=color;
+                i++;
+            }
+            select = select.substring(0,select.length()-3);
+            select += ") AND (";
+            for(String rarity: activeRarities){
+                select+="rarity=? OR ";
+                args[i]=rarity;
+                i++;
+            }
+            select = select.substring(0,select.length()-3);
+
+        }else if(!activeColors.isEmpty()){
+            args = new String[activeColors.size()];
+            for(String color: activeColors){
+                select+="colors=? OR ";
+                args[i]=color;
+                i++;
+            }
+            select = select.substring(0,select.length()-3);
+        }else if(!activeRarities.isEmpty()){
+            args = new String[activeRarities.size()];
+            for(String rarity: activeRarities){
+                select+="rarity=? OR ";
+                args[i]=rarity;
+                i++;
+            }
+            select = select.substring(0,select.length()-3);
+        }else
+            return null;
+        select+=")";
+
+        System.out.println("Resultado select: "+select);
+        System.out.println("Resultado: "+Arrays.toString(args));
+
+        //CursorLoader(context, CARD_URI, null, null, null, null);
+        return new CursorLoader(context, CARD_URI, null, select, args, null);  //Activity,  Table, Projection, Select, arguments (where if ...), order (order by)
     }
 
     private static void avoidDuplications(Context context, HashMap<String, Card> cards) {
