@@ -1,10 +1,14 @@
 package com.pau.a14270729b.magiccards;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -35,6 +39,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     View view;
     private ProgressDialog dialog;
     private CardsCursorAdapter adapter;
+    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+    private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
 
     public MainActivityFragment() {
     }
@@ -47,14 +53,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         FragmentMainBinding bindig = DataBindingUtil.inflate
                 (inflater, R.layout.fragment_main, container, false);
         view = bindig.getRoot();
-
 
         adapter = new CardsCursorAdapter(getContext(), Card.class);
 
@@ -71,7 +75,18 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 startActivity(intent);
             }
         });
-       getLoaderManager().initLoader(0,null,this);
+
+        mCallbacks = this;
+        getLoaderManager().initLoader(0,null,mCallbacks);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                getLoaderManager().restartLoader(0,null,mCallbacks);
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
+
         return view;
     }
 
@@ -100,7 +115,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onStart() {
         super.onStart();
-        getLoaderManager().restartLoader(0,null,this);
     }
 
     private void refresh() {
