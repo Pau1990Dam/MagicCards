@@ -108,6 +108,20 @@
     <string-array name="color_defaults">
         <item>White</item>
     </string-array>
+
+    <!-- Query by keyWord -->
+    <string name="edit_text_category">CARDS FINDER</string>
+    <string name="custom_search">Make Your Query</string>
+    <string name="dialog_title">Use any identifying word or sentence</string>
+    <string name="edit_text_hint">Ex using card name: Wall of Stones</string>
+    <!--       android:title="@string/edit_text_category" />
+    <EditTextPreference
+        android:key="word"
+        android:title="@string/custom_search"
+        android:persistent="true"
+        android:dialogTitle="@string/dialog_title"
+        android:dialogMessage="@string/dialog_message"
+        android:defaultValue="" />  -->
     <!--
         <item>0</item>
         <item>1</item>

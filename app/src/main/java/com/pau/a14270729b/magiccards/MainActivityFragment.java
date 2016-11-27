@@ -78,14 +78,17 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         mCallbacks = this;
         getLoaderManager().initLoader(0,null,mCallbacks);
+
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                getLoaderManager().restartLoader(0,null,mCallbacks);
+                getLoaderManager().restartLoader(0, null, mCallbacks);
             }
         };
         prefs.registerOnSharedPreferenceChangeListener(prefListener);
+
 
         return view;
     }

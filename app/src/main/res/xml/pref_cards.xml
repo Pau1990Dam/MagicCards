@@ -4,13 +4,11 @@
     <PreferenceCategory
         android:title="@string/card_settings_section_rarity">
         <MultiSelectListPreference
-
             android:entries="@array/rarity_names"
             android:entryValues="@array/rarity_values"
             android:key="rarity"
             android:title="@string/rarity_settings"
             android:summary="Más tarde solucionaremos lo del summary"
-
             />
         <!-- android:defaultValue="@array/defaults"   -->
     </PreferenceCategory>
@@ -19,16 +17,27 @@
         android:title="@string/card_settings_section_colors">
 
         <MultiSelectListPreference
-
             android:entries="@array/color_names"
             android:entryValues="@array/color_values"
             android:key="color"
             android:title="@string/color_settings"
             android:summary="Más tarde solucionaremos lo del summary"
-
             />
 
     </PreferenceCategory>
+    <PreferenceCategory
+       android:title="@string/edit_text_category" />
+    <EditTextPreference
+        android:key="word"
+        android:title="@string/custom_search"
+        android:persistent="true"
+        android:dialogTitle="@string/dialog_title"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:hint="@string/edit_text_hint"
+        android:defaultValue="" />
+
 </PreferenceScreen>
 
     <!-- android:defaultValue="@array/color_defaults" -->

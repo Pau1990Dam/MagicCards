@@ -51,20 +51,22 @@ public class DataManager {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> activeRarities = new HashSet<>();
         Set<String> activeColors = new HashSet<>();
+        String queryWords;
 
         activeRarities = preferences.getStringSet("rarity", activeRarities);
         activeColors = preferences.getStringSet("color", activeColors);
-
+        queryWords = preferences.getString("word",null);
+        int qWargsSizeCorrector = 0;
+        if(queryWords != null)qWargsSizeCorrector=1;
 
         String select = "";
-        String args [];
-        //System.out.println("Restart "+args.length);
-        //if(args.length==0)return null;
-        if(activeColors.size()+activeRarities.size()==37)return new CursorLoader(context, CARD_URI, null, null, null, null);
+        String args [] = new String[0];
+        if(activeColors.size()+activeRarities.size()==37)return new CursorLoader(context, CARD_URI,
+                null, null, null, null);
         select+="(";
         int i = 0;
         if(!activeColors.isEmpty()&&!activeRarities.isEmpty()){
-            args = new String[activeColors.size()+activeRarities.size()];
+            args = new String[activeColors.size()+activeRarities.size()+qWargsSizeCorrector];
             for(String color: activeColors){
                 select+="colors=? OR ";
                 args[i]=color;
@@ -80,7 +82,7 @@ public class DataManager {
             select = select.substring(0,select.length()-3);
 
         }else if(!activeColors.isEmpty()){
-            args = new String[activeColors.size()];
+            args = new String[activeColors.size()+qWargsSizeCorrector];
             for(String color: activeColors){
                 select+="colors=? OR ";
                 args[i]=color;
@@ -88,32 +90,44 @@ public class DataManager {
             }
             select = select.substring(0,select.length()-3);
         }else if(!activeRarities.isEmpty()){
-            args = new String[activeRarities.size()];
+            args = new String[activeRarities.size()+qWargsSizeCorrector];
             for(String rarity: activeRarities){
                 select+="rarity=? OR ";
                 args[i]=rarity;
                 i++;
             }
             select = select.substring(0,select.length()-3);
+        }else if(queryWords==null)
+            return new CursorLoader(context, CARD_URI, null, null, null, null);
+
+
+        if(queryWords!=null) {
+            if (!activeColors.isEmpty() || !activeRarities.isEmpty()) {
+                select += ") AND (_id || ' ' ||  IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' )" +
+                        "||  ' ' ||   IFNULL (flavor, ' ') ||  ' '  || IFNULL ( id, ' ') || ' ' ||" +
+                        "  IFNULL (imageUrl, ' ') ||  ' ' ||  IFNULL (name, ' ') || ' ' ||" +
+                        "   IFNULL (power, ' ') ||  ' ' ||  IFNULL (rarity, ' ' )||  ' ' ||" +
+                        "  IFNULL ( text, ' ' ) ||  ' ' ||  IFNULL (toughness, ' ') ||  ' ' ||" +
+                        "  IFNULL (type, ' ') || ' ') LIKE ?";
+                args[args.length - 1] = "%" + queryWords + "%";
+            } else {
+                select += "_id || ' ' ||  IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' )" +
+                        "||  ' ' ||   IFNULL (flavor, ' ') ||  ' '  || IFNULL ( id, ' ') || ' ' ||" +
+                        "  IFNULL (imageUrl, ' ') ||  ' ' ||  IFNULL (name, ' ') || ' ' ||" +
+                        "   IFNULL (power, ' ') ||  ' ' ||  IFNULL (rarity, ' ' )||  ' ' ||" +
+                        "  IFNULL ( text, ' ' ) ||  ' ' ||  IFNULL (toughness, ' ') ||  ' ' ||" +
+                        "  IFNULL (type, ' ') || ' ') LIKE ?";
+                args = new String[]{"%" + queryWords + "%"};
+            }
         }else
-            return null;
-        select+=")";
+            select+=")";
+
+
 
         System.out.println("Resultado select: "+select);
         System.out.println("Resultado: "+Arrays.toString(args));
 
-        //CursorLoader(context, CARD_URI, null, null, null, null);
-        return new CursorLoader(context, CARD_URI, null, select, args, null);  //Activity,  Table, Projection, Select, arguments (where if ...), order (order by)
-    }
-
-    private static void avoidDuplications(Context context, HashMap<String, Card> cards) {
-
-        QueryResultIterable<Card> itr = cupboard().withContext(context).query(CARD_URI, Card.class).
-                query();
-        for(Card card: itr){
-            Log.i("DEBUG"+" CARDS SIZE ", "eeeeiii : "+card.toString());
-            cards.remove(card.toString());
-        }
+        return new CursorLoader(context, CARD_URI, null, select, args, null);  //Activity,  Table, Columnas, clausulas (where if...), cierre de las clausulas, order (order by)
     }
 
 }
