@@ -307,6 +307,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             //Rarities summary
             pref.setSummary(summary.toString().toUpperCase());
 
+            bindPreferenceSummaryToValue(findPreference("word"));
+
         }
 
         @Override

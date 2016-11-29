@@ -113,7 +113,7 @@
     <string name="edit_text_category">CARDS FINDER</string>
     <string name="custom_search">Make Your Query</string>
     <string name="dialog_title">Use any identifying word or sentence</string>
-    <string name="edit_text_hint">Ex using card name: Wall of Stones</string>
+    <string name="edit_text_hint">Ex using card name: Wall of Stone</string>
     <!--       android:title="@string/edit_text_category" />
     <EditTextPreference
         android:key="word"

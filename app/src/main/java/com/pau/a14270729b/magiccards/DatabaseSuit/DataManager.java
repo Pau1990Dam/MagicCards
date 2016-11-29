@@ -55,9 +55,9 @@ public class DataManager {
 
         activeRarities = preferences.getStringSet("rarity", activeRarities);
         activeColors = preferences.getStringSet("color", activeColors);
-        queryWords = preferences.getString("word",null);
+        queryWords = preferences.getString("word","");
         int qWargsSizeCorrector = 0;
-        if(queryWords != null)qWargsSizeCorrector=1;
+        if(!queryWords.equals(""))qWargsSizeCorrector=1;
 
         String select = "";
         String args [] = new String[0];
@@ -97,11 +97,11 @@ public class DataManager {
                 i++;
             }
             select = select.substring(0,select.length()-3);
-        }else if(queryWords==null)
+        }else if(queryWords.equals("")||queryWords==null)
             return new CursorLoader(context, CARD_URI, null, null, null, null);
 
 
-        if(queryWords!=null) {
+        if(!queryWords.equals("")) {
             if (!activeColors.isEmpty() || !activeRarities.isEmpty()) {
                 select += ") AND (_id || ' ' ||  IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' )" +
                         "||  ' ' ||   IFNULL (flavor, ' ') ||  ' '  || IFNULL ( id, ' ') || ' ' ||" +
@@ -121,7 +121,6 @@ public class DataManager {
             }
         }else
             select+=")";
-
 
 
         System.out.println("Resultado select: "+select);
