@@ -77,18 +77,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         });
 
         mCallbacks = this;
+
         getLoaderManager().initLoader(0,null,mCallbacks);
-
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                getLoaderManager().restartLoader(0, null, mCallbacks);
-            }
-        };
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
-
 
         return view;
     }
@@ -118,6 +108,22 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if(isAdded())
+                    getLoaderManager().restartLoader(0, null, mCallbacks);
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
+
+        super.onResume();
     }
 
     private void refresh() {

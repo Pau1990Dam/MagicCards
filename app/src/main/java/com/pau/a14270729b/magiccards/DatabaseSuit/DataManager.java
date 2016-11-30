@@ -103,20 +103,18 @@ public class DataManager {
 
         if(!queryWords.equals("")) {
             if (!activeColors.isEmpty() || !activeRarities.isEmpty()) {
-                select += ") AND (_id || ' ' ||  IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' )" +
-                        "||  ' ' ||   IFNULL (flavor, ' ') ||  ' '  || IFNULL ( id, ' ') || ' ' ||" +
-                        "  IFNULL (imageUrl, ' ') ||  ' ' ||  IFNULL (name, ' ') || ' ' ||" +
-                        "   IFNULL (power, ' ') ||  ' ' ||  IFNULL (rarity, ' ' )||  ' ' ||" +
-                        "  IFNULL ( text, ' ' ) ||  ' ' ||  IFNULL (toughness, ' ') ||  ' ' ||" +
-                        "  IFNULL (type, ' ') || ' ') LIKE ?";
+                select += ") AND (IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' ) ||  ' ' || " +
+                        "IFNULL (flavor, ' ') ||  ' ' || IFNULL (name, ' ') || ' ' || " +
+                        "IFNULL (power, ' ') ||  ' ' ||  IFNULL (rarity, ' ' )||  ' ' || " +
+                        "IFNULL (text, ' ' ) ||  ' ' ||  IFNULL (toughness, ' ') ||  ' ' || " +
+                        "IFNULL (type, ' ') ) LIKE ?";
                 args[args.length - 1] = "%" + queryWords + "%";
             } else {
-                select += "_id || ' ' ||  IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' )" +
-                        "||  ' ' ||   IFNULL (flavor, ' ') ||  ' '  || IFNULL ( id, ' ') || ' ' ||" +
-                        "  IFNULL (imageUrl, ' ') ||  ' ' ||  IFNULL (name, ' ') || ' ' ||" +
-                        "   IFNULL (power, ' ') ||  ' ' ||  IFNULL (rarity, ' ' )||  ' ' ||" +
-                        "  IFNULL ( text, ' ' ) ||  ' ' ||  IFNULL (toughness, ' ') ||  ' ' ||" +
-                        "  IFNULL (type, ' ') || ' ') LIKE ?";
+                select += "IFNULL (cmc, ' ' )|| ' ' ||  IFNULL (colors, ' ' ) ||  ' ' || " +
+                        "IFNULL (flavor, ' ') ||  ' ' || IFNULL (name, ' ') || ' ' || " +
+                        "IFNULL (power, ' ') ||  ' ' ||  IFNULL (rarity, ' ' )||  ' ' || " +
+                        "IFNULL (text, ' ' ) ||  ' ' ||  IFNULL (toughness, ' ') ||  ' ' || " +
+                        "IFNULL (type, ' ') ) LIKE ?";
                 args = new String[]{"%" + queryWords + "%"};
             }
         }else
