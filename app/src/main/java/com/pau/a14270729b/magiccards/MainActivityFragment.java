@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -20,13 +19,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.alexvasilkov.events.Events;
+import com.pau.a14270729b.magiccards.AsyncTask.RefreshTask;
 import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
-import java.util.HashMap;
-
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
-import com.pau.a14270729b.magiccards.MagicCardsApi.MagiCardsApi;
 import com.pau.a14270729b.magiccards.Pojos.Card;
 
 
@@ -85,6 +82,16 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         return view;
     }
 
+    @Events.Subscribe("start-downloading-data")
+    void preRefresh() {
+        dialog.show();
+    }
+
+    @Events.Subscribe("finish-downloading-data")
+    void afterRefresh() {
+        dialog.dismiss();
+    }
+
     boolean esTablet() {
         return getResources().getBoolean(R.bool.tablet);
     }
@@ -114,6 +121,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onStart() {
         super.onStart();
+        Events.register(this);
     }
 
     @Override
@@ -133,7 +141,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
     private void refresh() {
-        RefreshTask task = new RefreshTask();
+        RefreshTask task = new RefreshTask(getActivity().getApplicationContext());
         task.execute();
     }
 
@@ -152,36 +160,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         adapter.swapCursor(null);
     }
 
-    private class RefreshTask extends AsyncTask<Object, Object, Object>{
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog.show();
-        }
-
-        @Override
-        protected Object doInBackground(Object... params) {
-
-            HashMap<String, Card> cards;
-            Cursor cursor = DataManager.getCursor(getContext());
-            cards = MagiCardsApi.getAllCartas(cursor.getCount());
-            if(cards!=null){
-                DataManager.deleteCards(getContext());
-                DataManager.saveCards(cards,getContext());
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object aVoid) {
-            super.onPostExecute(aVoid);
-
-            dialog.dismiss();
-        }
-
-    }
 
 }
