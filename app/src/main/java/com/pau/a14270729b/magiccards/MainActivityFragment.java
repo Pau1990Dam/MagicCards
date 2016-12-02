@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.alexvasilkov.events.Events;
 import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
@@ -72,7 +73,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                     Intent intent = new Intent(getContext(),DetailActivity.class);
                     intent.putExtra("card",card);
                     startActivity(intent);
-                }
+                }else
+                    Events.create("card-selected").param(card).post();
             }
         });
 
