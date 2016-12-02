@@ -68,9 +68,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Card card = (Card) parent.getItemAtPosition(position);
-                Intent intent = new Intent(getContext(),DetailActivity.class);
-                intent.putExtra("card",card);
-                startActivity(intent);
+                if(!esTablet()){
+                    Intent intent = new Intent(getContext(),DetailActivity.class);
+                    intent.putExtra("card",card);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -79,6 +81,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         getLoaderManager().initLoader(0,null,mCallbacks);
 
         return view;
+    }
+
+    boolean esTablet() {
+        return getResources().getBoolean(R.bool.tablet);
     }
 
     @Override
