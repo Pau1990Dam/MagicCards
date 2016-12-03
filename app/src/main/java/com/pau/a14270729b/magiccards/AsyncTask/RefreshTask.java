@@ -11,10 +11,6 @@ import com.pau.a14270729b.magiccards.Pojos.Card;
 
 import java.util.HashMap;
 
-/**
- * Created by pau on 2/12/16.
- */
-
 public class RefreshTask extends AsyncTask<Object, Object, Object> {
     private Context context;
 
@@ -32,12 +28,12 @@ public class RefreshTask extends AsyncTask<Object, Object, Object> {
     protected Object doInBackground(Object... params) {
 
         HashMap<String, Card> cards;
-        Cursor cursor = DataManager.getCursor(context);
+        /*Cursor cursor = DataManager.getCursor(context);
         cards = MagiCardsApi.getAllCartas(cursor.getCount());
         if(cards!=null){
             DataManager.deleteCards(context);
             DataManager.saveCards(cards,context);
-        }
+        }*/
 
         return null;
     }

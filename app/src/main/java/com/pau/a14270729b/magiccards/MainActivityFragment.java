@@ -20,7 +20,6 @@ import android.widget.AdapterView;
 
 import com.alexvasilkov.events.Events;
 import com.pau.a14270729b.magiccards.AsyncTask.RefreshTask;
-import com.pau.a14270729b.magiccards.ShowDataFromDatabase.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
@@ -34,7 +33,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     View view;
     private ProgressDialog dialog;
-    private CardsCursorAdapter adapter;
+    //private CardsCursorAdapter adapter;
     private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
 
@@ -56,12 +55,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 (inflater, R.layout.fragment_main, container, false);
         view = bindig.getRoot();
 
-        adapter = new CardsCursorAdapter(getContext(), Card.class);
+        //adapter = new CardsCursorAdapter(getContext(), Card.class);
 
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Loading...");
 
-        bindig.lvCartas.setAdapter(adapter);
+        //bindig.lvCartas.setAdapter(adapter);
         bindig.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -147,17 +146,18 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return DataManager.getCursorLoader(getContext());
+        return null;
+        //DataManager.getCursorLoader(getContext());
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
+        //adapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
+        //adapter.swapCursor(null);
     }
 
 

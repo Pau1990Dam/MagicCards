@@ -16,7 +16,7 @@ import java.util.Set;
 
 import com.pau.a14270729b.magiccards.Pojos.Card;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
-import nl.qbusict.cupboard.QueryResultIterable;
+
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -25,7 +25,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  */
 
 public class DataManager {
-
+/*
     private static UriHelper URI_HELPER = UriHelper.with(MagicContentProvider.AUTHORITY);
     private static Uri CARD_URI = URI_HELPER.getUri(Card.class);
 
@@ -126,5 +126,5 @@ public class DataManager {
 
         return new CursorLoader(context, CARD_URI, null, select, args, null);  //Activity,  Table, Columnas, clausulas (where if...), cierre de las clausulas, order (order by)
     }
-
+*/
 }

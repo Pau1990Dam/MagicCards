@@ -41,11 +41,12 @@
                 android:value="com.pau.a14270729b.magiccards.MainActivity" />
         </activity>
 
-
         <provider
-            android:name=".DatabaseSuit.MagicContentProvider"
+            android:name=".provider.CardsProvider"
             android:authorities="com.pau.a14270729b.magiccards.provider"
             android:exported="false" />
+
+
     </application>
 </manifest>
 

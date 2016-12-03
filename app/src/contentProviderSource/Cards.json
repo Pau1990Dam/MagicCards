@@ -1,0 +1,48 @@
+{
+  "fields": [
+    {
+      "name": "card_ID",
+      "type": "String"
+    },
+    {
+      "name": "colors",
+      "type": "String"
+    },
+    {
+      "name": "rarity",
+      "type": "String"
+    },
+    {
+      "name": "name",
+      "type": "String"
+    },
+    {
+      "name": "text",
+      "type": "String"
+    },
+    {
+      "name": "flavor",
+      "type": "String"
+    },
+    {
+      "name": "toughness",
+      "type": "String"
+    },
+    {
+      "name": "type",
+      "type": "String"
+    },
+    {
+      "name": "power",
+      "type": "String"
+    },
+    {
+      "name": "imageUrl",
+      "type": "String"
+    },
+    {
+      "name": "cmc",
+      "type": "Integer"
+    }
+  ]
+}

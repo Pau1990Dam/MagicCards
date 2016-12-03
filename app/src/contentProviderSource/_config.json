@@ -1,0 +1,13 @@
+{
+  "syntaxVersion": 3,
+  "projectPackageId": "com.pau.a14270729b.magiccards",
+  "authority": "com.pau.a14270729b.magiccards.provider",
+  "providerJavaPackage": ".provider",
+  "providerClassName": "CardsProvider",
+  "sqliteOpenHelperClassName": "CardsSQLiteOpenHelper",
+  "sqliteOpenHelperCallbacksClassName": "CardsSQLiteOpenHelperCallbacks",
+  "databaseFileName": "Cards.db",
+  "databaseVersion": 1,
+  "enableForeignKeys": true,
+  "useAnnotations": true
+}
