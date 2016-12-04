@@ -76,7 +76,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         mCallbacks = this;
 
-        getLoaderManager().initLoader(0,null,mCallbacks);
+       // getLoaderManager().initLoader(0,null,mCallbacks);
 
         return view;
     }

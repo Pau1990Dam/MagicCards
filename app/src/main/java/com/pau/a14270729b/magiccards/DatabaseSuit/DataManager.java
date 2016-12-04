@@ -1,30 +1,62 @@
 package com.pau.a14270729b.magiccards.DatabaseSuit;
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.util.Log;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+
 
 import com.pau.a14270729b.magiccards.Pojos.Card;
-import nl.littlerobots.cupboard.tools.provider.UriHelper;
+import com.pau.a14270729b.magiccards.provider.CardsProvider;
+import com.pau.a14270729b.magiccards.provider.CardsSQLiteOpenHelper;
+import com.pau.a14270729b.magiccards.provider.CardsSQLiteOpenHelperCallbacks;
+import com.pau.a14270729b.magiccards.provider.cards.CardsColumns;
+import com.pau.a14270729b.magiccards.provider.cards.CardsContentValues;
+import com.pau.a14270729b.magiccards.provider.cards.CardsCursor;
+import com.pau.a14270729b.magiccards.provider.cards.CardsSelection;
 
-
-import static nl.qbusict.cupboard.CupboardFactory.cupboard;
-
-/**
- * Created by 14270729b on 11/11/16.
- */
 
 public class DataManager {
+
+    public static void saveCards(ArrayList<Card> cards, Context context) {
+        ArrayList <ContentValues> arr = new ArrayList<>();
+        ContentValues [] bulkToInsert = new ContentValues[cards.size()];
+        for(Card card: cards){
+            CardsContentValues values = new CardsContentValues();
+            values.putCardId(card.getId());
+            values.putCmc(card.getCmc());
+            values.putColors(card.getColors());
+            values.putFlavor(card.getFlavor());
+            values.putImageurl(card.getImageUrl());
+            values.putName(card.getName());
+            values.putPower(card.getPower());
+            values.putRarity(card.getRarity());
+            values.putText(card.getText());
+            values.putToughness(card.getToughness());
+            values.putType(card.getType());
+            arr.add(values.values());
+        }
+        arr.toArray(bulkToInsert);
+        context.getContentResolver().bulkInsert(CardsColumns.CONTENT_URI,bulkToInsert);
+    }
+
+    public static Cursor getCursor(Context context){
+        return context.getContentResolver().query(CardsColumns.CONTENT_URI,null,null,null,null);
+    }
+
+    public static void deleteCards(Context context) {
+        context.getContentResolver().delete(CardsColumns.CONTENT_URI,null,null);
+    }
 /*
     private static UriHelper URI_HELPER = UriHelper.with(MagicContentProvider.AUTHORITY);
     private static Uri CARD_URI = URI_HELPER.getUri(Card.class);

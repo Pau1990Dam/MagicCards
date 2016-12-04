@@ -9,6 +9,7 @@ import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
 import com.pau.a14270729b.magiccards.MagicCardsApi.MagiCardsApi;
 import com.pau.a14270729b.magiccards.Pojos.Card;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RefreshTask extends AsyncTask<Object, Object, Object> {
@@ -27,13 +28,13 @@ public class RefreshTask extends AsyncTask<Object, Object, Object> {
     @Override
     protected Object doInBackground(Object... params) {
 
-        HashMap<String, Card> cards;
-        /*Cursor cursor = DataManager.getCursor(context);
+        ArrayList<Card> cards;
+        Cursor cursor = DataManager.getCursor(context);
         cards = MagiCardsApi.getAllCartas(cursor.getCount());
         if(cards!=null){
             DataManager.deleteCards(context);
             DataManager.saveCards(cards,context);
-        }*/
+        }
 
         return null;
     }

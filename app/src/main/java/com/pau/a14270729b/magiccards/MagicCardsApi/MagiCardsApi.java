@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ import com.pau.a14270729b.magiccards.Pojos.Card;
 public class MagiCardsApi {
     private static final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
 
-    public static HashMap<String, Card> getAllCartas(int dbCards) {
+    public static ArrayList<Card> getAllCartas(int dbCards) {
         Uri builtUri = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendQueryParameter("pageSize","1")
@@ -30,7 +31,7 @@ public class MagiCardsApi {
         return getAllPages(url, dbCards);
     }
 
-    public static HashMap<String, Card> getAllPages(String url, int dbCards){
+    public static ArrayList<Card> getAllPages(String url, int dbCards){
         try {
                 //int numCards = HttpUtils.getTotalCount(url);
                 int numCards = 1000;
@@ -43,7 +44,7 @@ public class MagiCardsApi {
                 else
                     PAGES = numCards/100;
 
-            HashMap<String,Card> response = new HashMap<>();
+            ArrayList<Card> response = new ArrayList<>();
             for(int i = 1; i<=PAGES;i++){
                 Uri builtUri = Uri.parse(BASE_URL)
                         .buildUpon()
@@ -61,7 +62,7 @@ public class MagiCardsApi {
         return null;
     }
 
-    private static void getJson(String url, HashMap<String, Card> cards) {
+    private static void getJson(String url, ArrayList<Card> cards) {
         try {
             String JsonResponse = HttpUtils.get(url);
             jsonParser(JsonResponse, cards);
@@ -70,7 +71,7 @@ public class MagiCardsApi {
         }
     }
 
-    private static void jsonParser(String jsonResponse, HashMap<String, Card> cards) {
+    private static void jsonParser(String jsonResponse, ArrayList<Card> cards) {
         String [] cardColors;
         try {
             JSONObject data = new JSONObject(jsonResponse);
@@ -132,7 +133,7 @@ public class MagiCardsApi {
                 else
                     card.setColors("Colorless");
 
-                cards.put(card.toString(),card);
+                cards.add(card);
             }
         } catch (JSONException e) {
             e.printStackTrace();
