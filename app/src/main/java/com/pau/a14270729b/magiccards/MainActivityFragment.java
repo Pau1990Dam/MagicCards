@@ -20,10 +20,12 @@ import android.widget.AdapterView;
 
 import com.alexvasilkov.events.Events;
 import com.pau.a14270729b.magiccards.AsyncTask.RefreshTask;
+import com.pau.a14270729b.magiccards.CardsCursorAdapter.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
 
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
 import com.pau.a14270729b.magiccards.Pojos.Card;
+import com.pau.a14270729b.magiccards.provider.cards.CardsColumns;
 
 
 /**
@@ -33,7 +35,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     View view;
     private ProgressDialog dialog;
-    //private CardsCursorAdapter adapter;
+    private CardsCursorAdapter adapter;
     private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
 
@@ -55,12 +57,29 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 (inflater, R.layout.fragment_main, container, false);
         view = bindig.getRoot();
 
-        //adapter = new CardsCursorAdapter(getContext(), Card.class);
+        adapter = new CardsCursorAdapter(getContext(),
+                R.layout.activity_main,
+                null,
+                new String[]{
+                        CardsColumns.NAME,
+                        CardsColumns.TYPE,
+                        CardsColumns.RARITY,
+                        CardsColumns.TEXT,
+                        CardsColumns.IMAGEURL
+                },
+                new int[]{
+                        R.id.carta,
+                        R.id.type,
+                        R.id.rarity,
+                        R.id.text,
+                        R.id.imgUrl
+                },
+                0);
 
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Loading...");
 
-        //bindig.lvCartas.setAdapter(adapter);
+        bindig.lvCartas.setAdapter(adapter);
         bindig.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -76,7 +95,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         mCallbacks = this;
 
-       // getLoaderManager().initLoader(0,null,mCallbacks);
+        getLoaderManager().initLoader(0,null,mCallbacks);
 
         return view;
     }
@@ -146,18 +165,17 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-        //DataManager.getCursorLoader(getContext());
+        return DataManager.getCursorLoader(getContext());
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        //adapter.swapCursor(data);
+        adapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        //adapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
 

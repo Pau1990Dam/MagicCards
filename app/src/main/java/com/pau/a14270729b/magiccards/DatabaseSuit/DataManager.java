@@ -57,6 +57,9 @@ public class DataManager {
     public static void deleteCards(Context context) {
         context.getContentResolver().delete(CardsColumns.CONTENT_URI,null,null);
     }
+    public static CursorLoader getCursorLoader(Context context) {
+        return new CursorLoader(context,CardsColumns.CONTENT_URI,null,null,null,null);
+    }
 /*
     private static UriHelper URI_HELPER = UriHelper.with(MagicContentProvider.AUTHORITY);
     private static Uri CARD_URI = URI_HELPER.getUri(Card.class);
