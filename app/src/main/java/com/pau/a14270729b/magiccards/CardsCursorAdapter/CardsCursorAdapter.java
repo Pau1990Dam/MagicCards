@@ -8,16 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.pau.a14270729b.magiccards.R;
 import com.pau.a14270729b.magiccards.provider.cards.CardsCursor;
-
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
-/**
- * Created by pau on 4/12/16.
- */
 
 public class CardsCursorAdapter extends SimpleCursorAdapter {
     private final Context context;
@@ -51,6 +45,7 @@ public class CardsCursorAdapter extends SimpleCursorAdapter {
         Glide.with(context).load(cardsCursor.getImageurl()).bitmapTransform(
                 new RoundedCornersTransformation(context,14,1)).error(R.mipmap.ic_launcher).into(
                 imageUrl);
+
         return convertView;
     }
 }

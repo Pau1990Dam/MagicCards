@@ -1,22 +1,14 @@
 package com.pau.a14270729b.magiccards.MagicCardsApi;
 
 import android.net.Uri;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-
-
 import com.pau.a14270729b.magiccards.HttpPetition.HttpUtils;
 import com.pau.a14270729b.magiccards.Pojos.Card;
-
-//https://docs.magicthegathering.io/
 
 public class MagiCardsApi {
     private static final String BASE_URL = "https://api.magicthegathering.io/v1/cards";
@@ -32,9 +24,10 @@ public class MagiCardsApi {
     }
 
     public static ArrayList<Card> getAllPages(String url, int dbCards){
+
         try {
-                int numCards = HttpUtils.getTotalCount(url);
-                //int numCards = 1000;
+                //int numCards = HttpUtils.getTotalCount(url);
+                int numCards = 1000;
                 if(numCards==dbCards && numCards>0)return null;
 
                 final int PAGES;
@@ -72,7 +65,9 @@ public class MagiCardsApi {
     }
 
     private static void jsonParser(String jsonResponse, ArrayList<Card> cards) {
+
         String [] cardColors;
+
         try {
             JSONObject data = new JSONObject(jsonResponse);
             JSONArray jsonCards = data.getJSONArray("cards");
@@ -127,13 +122,15 @@ public class MagiCardsApi {
                     for(int j = 0; j < colors.length(); j++){
                         cardColors[j] = colors.getString(j);
                     }
-                    card.setColors(Arrays.toString(cardColors).replace(","," ").
+
+                    card.setColors(Arrays.toString(cardColors).replace(",","").
                             replace("[","").replace("]",""));
                 }
                 else
                     card.setColors("Colorless");
 
                 cards.add(card);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -141,32 +138,3 @@ public class MagiCardsApi {
     }
 
 }
-
-/*
-import android.net.Uri;
-
-import java.io.IOException;
-
-public class RottenTomatoesAPI {
-    private final String BASE_URL = "http://api.rottentomatoes.com/api/public/v1.0/";
-
-    String getPeliculesMesVistes(String pais) {
-        Uri builtUri = Uri.parse(BASE_URL)
-                .buildUpon()
-                .appendPath("lists")
-                .appendPath("movies")
-                .appendPath("box_office.json")
-                .appendQueryParameter("country", pais)
-                .build();
-        String url = builtUri.toString();
-
-        try {
-            String JsonResponse = HttpUtils.get(url);
-            return JsonResponse;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-}
- */

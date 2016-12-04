@@ -17,26 +17,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
 import com.alexvasilkov.events.Events;
 import com.pau.a14270729b.magiccards.AsyncTask.RefreshTask;
 import com.pau.a14270729b.magiccards.CardsCursorAdapter.CardsCursorAdapter;
 import com.pau.a14270729b.magiccards.databinding.FragmentMainBinding;
-
 import com.pau.a14270729b.magiccards.DatabaseSuit.DataManager;
-import com.pau.a14270729b.magiccards.Pojos.Card;
 import com.pau.a14270729b.magiccards.provider.cards.CardsColumns;
 
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     View view;
     private ProgressDialog dialog;
     private CardsCursorAdapter adapter;
-    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
 
     public MainActivityFragment() {
@@ -83,13 +76,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         bindig.lvCartas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Card card = (Card) parent.getItemAtPosition(position);
                 if(!esTablet()){
                     Intent intent = new Intent(getContext(),DetailActivity.class);
-                    intent.putExtra("card",card);
+                    intent.putExtra("card_id",id);
                     startActivity(intent);
                 }else
-                    Events.create("card-selected").param(card).post();
+                    Events.create("card-selected").param(id).post();
             }
         });
 
@@ -146,7 +138,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if(isAdded())

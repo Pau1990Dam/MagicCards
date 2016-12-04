@@ -2,41 +2,22 @@ package com.pau.a14270729b.magiccards.Pojos;
 
 import java.io.Serializable;
 
-/**
- * Created by 14270729b on 14/10/16.
- */
-
 public class Card implements Serializable {
 
-    String name;
-    String rarity;
-    String text;
-    String flavor;
-    String type;
-    String imageUrl;
-    String id;
-    String colors;
-    String power;
-    String toughness;
-    int cmc;
+    private String name;
+    private String rarity;
+    private String text;
+    private String flavor;
+    private String type;
+    private String imageUrl;
+    private String id;
+    private String colors;
+    private String power;
+    private String toughness;
+    private int cmc;
 
 
     public Card(){}
-
-    public Card(String name, String rarity, String text, String flavor, String type, String imageUrl,
-                String id, String colors, String power, String toughness, int cmc) {
-        this.name = name;
-        this.rarity = rarity;
-        this.text = text;
-        this.flavor = flavor;
-        this.type = type;
-        this.imageUrl = imageUrl;
-        this.id = id;
-        this.colors = colors;
-        this.power = power;
-        this.toughness = toughness;
-        this.cmc = cmc;
-    }
 
     public String getFlavor() { return flavor; }
 
