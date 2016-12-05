@@ -30,6 +30,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     View view;
     private ProgressDialog dialog;
     private CardsCursorAdapter adapter;
+    private SharedPreferences.OnSharedPreferenceChangeListener prefListener;
     private LoaderManager.LoaderCallbacks<Cursor> mCallbacks;
 
     public MainActivityFragment() {
@@ -138,7 +139,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 if(isAdded())

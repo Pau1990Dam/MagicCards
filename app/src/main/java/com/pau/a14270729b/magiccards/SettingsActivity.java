@@ -297,6 +297,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             pref = findPreference("rarity");
             shared = pref.getSharedPreferences();
+            activePreferences = new HashSet<>();
             activePreferences = shared.getStringSet("rarity",activePreferences);
             summary.setLength(0);
 
