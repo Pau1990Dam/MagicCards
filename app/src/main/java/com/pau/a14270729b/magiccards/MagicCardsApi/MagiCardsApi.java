@@ -26,8 +26,8 @@ public class MagiCardsApi {
     public static ArrayList<Card> getAllPages(String url, int dbCards){
 
         try {
-                //int numCards = HttpUtils.getTotalCount(url);
-                int numCards = 1000;
+                int numCards = HttpUtils.getTotalCount(url);
+                //int numCards = 1000;
                 if(numCards==dbCards && numCards>0)return null;
 
                 final int PAGES;
