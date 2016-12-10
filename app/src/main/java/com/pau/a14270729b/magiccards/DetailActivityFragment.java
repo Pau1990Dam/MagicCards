@@ -77,7 +77,8 @@ public class DetailActivityFragment extends Fragment {
             Glide.with(getContext()).load(cardsCursor.getImageurl()).bitmapTransform(
                     new RoundedCornersTransformation(getContext(),14,1)).into(binding.imageDetail);
         else
-            Glide.with(getContext()).load(R.mipmap.ic_launcher).into(binding.imageDetail);
+            Glide.with(getContext()).load(R.drawable.alt_cardback).bitmapTransform(
+                new RoundedCornersTransformation(getContext(),14,1)).into(binding.imageDetail);
 
         binding.power.setText(Html.fromHtml("<b>POWER : </b>"+cardsCursor.getPower()));
         binding.type.setText(Html.fromHtml("<b>TYPE : </b>"+cardsCursor.getType()));

@@ -42,10 +42,12 @@ public class CardsCursorAdapter extends SimpleCursorAdapter {
         rarity.setText(cardsCursor.getRarity());
         text.setText(cardsCursor.getText());
 
-        Glide.with(context).load(cardsCursor.getImageurl()).bitmapTransform(
-                new RoundedCornersTransformation(context,14,1)).error(R.mipmap.ic_launcher).into(
-                imageUrl);
-
+        if(!cardsCursor.getImageurl().equals(""))
+            Glide.with(context).load(cardsCursor.getImageurl()).bitmapTransform(
+                    new RoundedCornersTransformation(context,14,1)).into(imageUrl);
+        else
+            Glide.with(context).load(R.drawable.alt_cardback).bitmapTransform(
+                    new RoundedCornersTransformation(context,14,1)).into(imageUrl);
         return convertView;
     }
 }

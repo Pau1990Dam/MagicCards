@@ -35,8 +35,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     testCompile 'junit:junit:4.12'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     compile 'nl.qbusict:cupboard:2.1.4'
     compile 'nl.littlerobots:cupboard-tools:0.2.0'
     compile 'com.alexvasilkov:events:1.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 }
