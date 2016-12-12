@@ -58,14 +58,14 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                         CardsColumns.NAME,
                         CardsColumns.TYPE,
                         CardsColumns.RARITY,
-                        CardsColumns.TEXT,
+                        CardsColumns.COLORS,
                         CardsColumns.IMAGEURL
                 },
                 new int[]{
                         R.id.carta,
                         R.id.type,
                         R.id.rarity,
-                        R.id.text,
+                        R.id.colors,
                         R.id.imgUrl
                 },
                 0);

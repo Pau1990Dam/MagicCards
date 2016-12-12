@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="white"/>
+    <item type="id" name="black"/>
+    <item type="id" name="blue"/>
+    <item type="id" name="red"/>
+    <item type="id" name="green"/>
+    <item type="id" name="colorless"/>
+
+</resources>

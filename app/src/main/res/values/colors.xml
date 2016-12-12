@@ -9,6 +9,7 @@
     <color name="colorGrey">#8c8c8c</color>
     <color name="colorDarkGrey">#4d4d4d</color>
     <color name="colorBackgoundFooter">#90000000</color>
+    <color name="colorListViewSecondaryText">#ffcc00</color>
 
 
 </resources>

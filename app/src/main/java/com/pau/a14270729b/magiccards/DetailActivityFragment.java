@@ -1,5 +1,6 @@
 package com.pau.a14270729b.magiccards;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
@@ -9,6 +10,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.alexvasilkov.events.Events;
 import com.bumptech.glide.Glide;
 import com.pau.a14270729b.magiccards.databinding.FragmentDetailBinding;
@@ -80,12 +84,121 @@ public class DetailActivityFragment extends Fragment {
             Glide.with(getContext()).load(R.drawable.alt_cardback).bitmapTransform(
                 new RoundedCornersTransformation(getContext(),14,1)).into(binding.imageDetail);
 
-        binding.power.setText(Html.fromHtml("<b>POWER : </b>"+cardsCursor.getPower()));
+        binding.powerToughness.setText(Html.fromHtml("<b>"+cardsCursor.getPower()+" / "+
+                cardsCursor.getToughness()+"</b>"));
         binding.type.setText(Html.fromHtml("<b>TYPE : </b>"+cardsCursor.getType()));
         binding.rarity.setText(Html.fromHtml("<b>RARITY : </b>"+cardsCursor.getRarity()));
-        binding.colors.setText(Html.fromHtml("<b>COLORS : </b>"+cardsCursor.getColors()));
-        binding.cmc.setText(Html.fromHtml("<b>MANA COST : </b>"+cardsCursor.getCmc()));
+        binding.cmc.setText(Html.fromHtml("<b>CONVERTED MANA COST : </b>"+cardsCursor.getCmc()));
         binding.text.setText(Html.fromHtml("<b>INFO : </b>"+cardsCursor.getText()));
+        binding.flavor.setText(Html.fromHtml(cardsCursor.getFlavor()));
 
+        String arr [] = cardsCursor.getColors().split(" ");
+        LinearLayout.LayoutParams params =  new LinearLayout
+                .LayoutParams(50, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Context context = getContext();
+
+        for(String color: arr){
+
+            ImageView c = new ImageView(context);
+            c.setLayoutParams(params);
+
+            switch (color) {
+                case "White":
+                    c.setId(R.id.white);
+                    Glide.with(context).load(R.drawable.ic_white).into(c);
+                    break;
+                case "Black":
+                    c.setId(R.id.black);
+                    Glide.with(context).load(R.drawable.ic_black).into(c);
+                    break;
+                case "Red":
+                    c.setId(R.id.red);
+                    Glide.with(context).load(R.drawable.ic_red).into(c);
+                    break;
+                case "Green":
+                    c.setId(R.id.green);
+                    Glide.with(context).load(R.drawable.ic_green).into(c);
+                    break;
+                case "Blue":
+                    c.setId(R.id.blue);
+                    Glide.with(context).load(R.drawable.ic_blue).into(c);
+                    break;
+                case "Colorless":
+                    c.setId(R.id.colorless);
+                    Glide.with(context).load(R.drawable.ic_colorless).into(c);
+                    break;
+            }
+
+            binding.colors.addView(c);
+        }
     }
 }
+
+
+
+/*
+String arr [] = cardsCursor.getColors().split(" ");
+        LinearLayout.LayoutParams params =  new LinearLayout
+                .LayoutParams(50, ViewGroup.LayoutParams.WRAP_CONTENT);
+boolean activateJump;
+        if(layout.getChildCount()==0) {
+            jump:
+            for (int i = 0; i < arr.length; i++) {
+                ImageView color = new ImageView(context);
+                color.setLayoutParams(params);
+                activateJump = true;
+                switch (arr[i]) {
+                    case "White":
+                        if (layout.findViewById(R.id.white) == null) {
+                            color.setId(R.id.white);
+                            Glide.with(context).load(R.drawable.ic_white).into(color);
+                            activateJump = false;
+                        }
+                        if (activateJump) break jump;
+                        break;
+                    case "Black":
+                        if (layout.findViewById(R.id.black) == null) {
+                            color.setId(R.id.black);
+                            Glide.with(context).load(R.drawable.ic_black).into(color);
+                            activateJump = false;
+                        }
+                        if (activateJump) break jump;
+                        break;
+                    case "Red":
+                        if (layout.findViewById(R.id.red) == null) {
+                            color.setId(R.id.red);
+                            Glide.with(context).load(R.drawable.ic_red).into(color);
+                            activateJump = false;
+                        }
+                        if (activateJump) break jump;
+                        break;
+                    case "Green":
+                        if (layout.findViewById(R.id.green) == null) {
+                            color.setId(R.id.green);
+                            Glide.with(context).load(R.drawable.ic_green).into(color);
+                            activateJump = false;
+                        }
+                        if (activateJump) break jump;
+                        break;
+                    case "Blue":
+                        if (layout.findViewById(R.id.blue) == null) {
+                            color.setId(R.id.blue);
+                            Glide.with(context).load(R.drawable.ic_blue).into(color);
+                            activateJump = false;
+                        }
+                        if (activateJump) break jump;
+                        break;
+                    case "Colorless":
+                        if (layout.findViewById(R.id.colorless) == null) {
+                            color.setId(R.id.colorless);
+                            Glide.with(context).load(R.drawable.ic_colorless).into(color);
+                            activateJump = false;
+                        }
+                        if (activateJump) break jump;
+                        break;
+                }
+
+                layout.addView(color);
+            }
+        }
+ */
