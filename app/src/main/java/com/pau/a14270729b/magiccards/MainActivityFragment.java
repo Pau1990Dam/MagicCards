@@ -65,7 +65,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                         R.id.carta,
                         R.id.type,
                         R.id.rarity,
-                        R.id.colors,
                         R.id.imgUrl
                 },
                 0);

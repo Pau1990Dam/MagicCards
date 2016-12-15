@@ -2,6 +2,7 @@ package com.pau.a14270729b.magiccards.CardsCursorAdapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.pau.a14270729b.magiccards.R;
+import com.pau.a14270729b.magiccards.databinding.CartasFilaBinding;
 import com.pau.a14270729b.magiccards.provider.cards.CardsCursor;
 
 import java.util.Arrays;
@@ -27,61 +29,75 @@ public class CardsCursorAdapter extends SimpleCursorAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         Cursor cursor = getCursor();
         CardsCursor cardsCursor = new CardsCursor(cursor);
         cardsCursor.moveToPosition(position);
+        CartasFilaBinding binding = null;
 
         if(convertView == null){
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.cartas_fila,parent, false);
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.cartas_fila,parent,false);
+        }else{
+            binding = DataBindingUtil.getBinding(convertView);
         }
 
-        TextView name = (TextView) convertView.findViewById(R.id.carta);
-        TextView type = (TextView) convertView.findViewById(R.id.type);
-        TextView rarity = (TextView) convertView.findViewById(R.id.rarity);
-        TextView colors =(TextView) convertView.findViewById(R.id.colors);
-        ImageView imageUrl = (ImageView) convertView.findViewById(R.id.imgUrl);
 
-        name.setText(cardsCursor.getName());
-        type.setText(cardsCursor.getType());
-        rarity.setText(cardsCursor.getRarity());
+        binding.carta.setText(cardsCursor.getName());
+        binding.type.setText(cardsCursor.getType());
+        binding.rarity.setText(cardsCursor.getRarity());
 
         String arr [] = cardsCursor.getColors().split(" ");
-        String colorFormater="";
+        ImageView img [] = {binding.color1,binding.color2,binding.color3,binding.color4,binding.color5};
+        LinearLayout.LayoutParams params =  new LinearLayout
+                .LayoutParams(50, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        for(String color: arr){
-            switch (color){
+
+        //Esto me garantiza que aunque mueva el scroll del Listivew muy rápido no me carge drawables
+        //en los Imagesview q debieran estar vacios.Es decir, esto es una forma de limpiar valor q
+        // se hayan quedado en el buffer manual
+        for(ImageView j: img){
+            j.setImageResource(0);
+        }
+
+        for(int i = 0; i < arr.length; i++){
+
+            switch (arr[i]){
+
                 case "White":
-                    colorFormater+= "<font color=#ffffff>"+" "+color+"</font>";
-                    break;
-                case "Black":
-                    colorFormater+= "<font color=#000000>"+" "+color+"</font>";
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_white).into(img[i]);
                     break;
                 case "Blue":
-                    colorFormater+= "<font color=#000080>"+" "+color+"</font>";
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_blue).into(img[i]);
+                    break;
+                case "Black":
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_black).into(img[i]);
                     break;
                 case "Red":
-                    colorFormater+= "<font color=#ff0000>"+" "+color+"</font>";
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_red).into(img[i]);
                     break;
                 case "Green":
-                    colorFormater+= "<font color=#2eb82e>"+" "+color+"</font>";
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_green).into(img[i]);
                     break;
                 case "Colorless":
-                    colorFormater+= "<font color=#476b6b>"+" "+color+"</font>";
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_colorless).into(img[i]);
                     break;
             }
         }
 
-        colors.setText(Html.fromHtml(colorFormater));
-
         if(!cardsCursor.getImageurl().equals(""))
             Glide.with(context).load(cardsCursor.getImageurl()).bitmapTransform(
-                    new RoundedCornersTransformation(context,14,1)).into(imageUrl);
+                    new RoundedCornersTransformation(context,14,1)).into(binding.imgUrl);
         else
             Glide.with(context).load(R.drawable.alt_cardback).bitmapTransform(
-                    new RoundedCornersTransformation(context,14,1)).into(imageUrl);
+                    new RoundedCornersTransformation(context,14,1)).into(binding.imgUrl);
 
-        return convertView;
+        return binding.getRoot();
     }
 }
 /*
@@ -149,4 +165,34 @@ boolean activateJump;
                 layout.addView(color);
             }
         }
+ */
+
+/*
+        String colorFormater="";
+
+        for(String color: arr){
+            switch (color){
+                case "White":
+                    colorFormater+= "<font color=#ffffff>"+" "+color+"</font>";
+                    break;
+                case "Black":
+                    colorFormater+= "<font color=#000000>"+" "+color+"</font>";
+                    break;
+                case "Blue":
+                    colorFormater+= "<font color=#000080>"+" "+color+"</font>";
+                    break;
+                case "Red":
+                    colorFormater+= "<font color=#ff0000>"+" "+color+"</font>";
+                    break;
+                case "Green":
+                    colorFormater+= "<font color=#2eb82e>"+" "+color+"</font>";
+                    break;
+                case "Colorless":
+                    colorFormater+= "<font color=#476b6b>"+" "+color+"</font>";
+                    break;
+            }
+        }
+
+        colors.setText(Html.fromHtml(colorFormater));
+
  */

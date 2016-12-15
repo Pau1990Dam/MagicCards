@@ -91,45 +91,45 @@ public class DetailActivityFragment extends Fragment {
         binding.cmc.setText(Html.fromHtml("<b>CONVERTED MANA COST : </b>"+cardsCursor.getCmc()));
         binding.text.setText(Html.fromHtml("<b>INFO : </b>"+cardsCursor.getText()));
         binding.flavor.setText(Html.fromHtml(cardsCursor.getFlavor()));
+        ImageView [] img = {binding.color1,binding.color2,binding.color3,binding.color4,binding.color5};
+
 
         String arr [] = cardsCursor.getColors().split(" ");
         LinearLayout.LayoutParams params =  new LinearLayout
                 .LayoutParams(50, ViewGroup.LayoutParams.WRAP_CONTENT);
         Context context = getContext();
 
-        for(String color: arr){
+        for(int i = 0; i < arr.length; i++){
 
-            ImageView c = new ImageView(context);
-            c.setLayoutParams(params);
+            //ImageView c = new ImageView(context);
+            //c.setLayoutParams(params);
 
-            switch (color) {
+            switch (arr[i]) {
                 case "White":
-                    c.setId(R.id.white);
-                    Glide.with(context).load(R.drawable.ic_white).into(c);
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_white).into(img[i]);
                     break;
                 case "Black":
-                    c.setId(R.id.black);
-                    Glide.with(context).load(R.drawable.ic_black).into(c);
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_black).into(img[i]);
                     break;
                 case "Red":
-                    c.setId(R.id.red);
-                    Glide.with(context).load(R.drawable.ic_red).into(c);
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_red).into(img[i]);
                     break;
                 case "Green":
-                    c.setId(R.id.green);
-                    Glide.with(context).load(R.drawable.ic_green).into(c);
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_green).into(img[i]);
                     break;
                 case "Blue":
-                    c.setId(R.id.blue);
-                    Glide.with(context).load(R.drawable.ic_blue).into(c);
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_blue).into(img[i]);
                     break;
                 case "Colorless":
-                    c.setId(R.id.colorless);
-                    Glide.with(context).load(R.drawable.ic_colorless).into(c);
+                    img[i].setLayoutParams(params);
+                    Glide.with(context).load(R.drawable.ic_colorless).into(img[i]);
                     break;
             }
-
-            binding.colors.addView(c);
         }
     }
 }
